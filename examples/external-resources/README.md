@@ -1,3 +1,8 @@
+# Example using existing VPC and external image repositories
+
+## Usage
+You need to deploy backend first, then build frontend application based on the outputs of the module and provide container repository url with tag.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -13,7 +18,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_external_resources"></a> [external\_resources](#module\_external\_resources) | ../../ | n/a |
+| <a name="module_external_resources"></a> [external\_resources](#module\_external\_resources) | u11d-com/terraform-u11d-medusajs | n/a |
 
 ## Resources
 
@@ -27,8 +32,8 @@ No inputs.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_backend_url"></a> [backend\_url](#output\_backend\_url) | n/a |
-| <a name="output_ecr_backend_url"></a> [ecr\_backend\_url](#output\_ecr\_backend\_url) | n/a |
-| <a name="output_ecr_storefront_url"></a> [ecr\_storefront\_url](#output\_ecr\_storefront\_url) | n/a |
-| <a name="output_storefront_url"></a> [storefront\_url](#output\_storefront\_url) | n/a |
+| <a name="output_backend_url"></a> [backend\_url](#output\_backend\_url) | The URL of the backend application. Only available when backend\_create is true. |
+| <a name="output_ecr_backend_url"></a> [ecr\_backend\_url](#output\_ecr\_backend\_url) | The URL of the backend ECR repository. Only available when ecr\_backend\_create is true. |
+| <a name="output_ecr_storefront_url"></a> [ecr\_storefront\_url](#output\_ecr\_storefront\_url) | The URL of the storefront ECR repository. Only available when ecr\_storefront\_create is true. |
+| <a name="output_storefront_url"></a> [storefront\_url](#output\_storefront\_url) | The URL of the storefront application. Only available when storefront\_create is true. |
 <!-- END_TF_DOCS -->

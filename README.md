@@ -40,6 +40,7 @@ module "medusajs" {
 
 The following values are provided to toggle on/off creation of the associated resources as desired:
 
+```hcl
 module "medusajs" {
   source = "u11d-com/terraform-u11d-medusajs"
 
@@ -65,6 +66,7 @@ module "medusajs" {
   # Disable creation of MedusaJS frontend resources
   storefront_create   = false
 }
+```
 
 ## Examples
 

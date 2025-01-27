@@ -38,17 +38,21 @@ module "minimal" {
 }
 
 output "ecr_backend_url" {
-  value = module.minimal.ecr_backend_url
+  description = "The URL of the backend ECR repository. Only available when ecr_backend_create is true."
+  value       = module.minimal.ecr_backend_url
 }
 
 output "ecr_storefront_url" {
-  value = module.minimal.ecr_storefront_url
+  description = "The URL of the storefront ECR repository. Only available when ecr_storefront_create is true."
+  value       = module.minimal.ecr_storefront_url
 }
 
 output "backend_url" {
-  value = module.minimal.backend_url
+  description = "The URL of the backend application. Only available when backend_create is true."
+  value       = module.minimal.backend_url
 }
 
 output "storefront_url" {
-  value = module.minimal.storefront_url
+  description = "The URL of the storefront application. Only available when storefront_create is true."
+  value       = module.minimal.storefront_url
 }
