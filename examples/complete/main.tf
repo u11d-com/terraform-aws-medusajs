@@ -100,10 +100,6 @@ module "complete" {
   }
   storefront_cloudfront_price_class = "PriceClass_100"
   storefront_container_image        = "your-storefront-image:latest"
-  storefront_container_registry_credentials = {
-    username = "your-registry-username"
-    password = "your-registry-password"
-  }
   storefront_resources = {
     instances = 1
     cpu       = 1024
@@ -120,17 +116,21 @@ module "complete" {
 }
 
 output "ecr_backend_url" {
-  value = module.complete.ecr_backend_url
+  description = "The URL of the backend ECR repository. Only available when ecr_backend_create is true."
+  value       = module.complete.ecr_backend_url
 }
 
 output "ecr_storefront_url" {
-  value = module.complete.ecr_storefront_url
+  description = "The URL of the storefront ECR repository. Only available when ecr_storefront_create is true."
+  value       = module.complete.ecr_storefront_url
 }
 
 output "backend_url" {
-  value = module.complete.backend_url
+  description = "The URL of the backend application. Only available when backend_create is true."
+  value       = module.complete.backend_url
 }
 
 output "storefront_url" {
-  value = module.complete.storefront_url
+  description = "The URL of the storefront application. Only available when storefront_create is true."
+  value       = module.complete.storefront_url
 }
