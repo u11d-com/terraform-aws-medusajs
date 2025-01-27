@@ -1,137 +1,187 @@
 # terraform-u11d-medusajs
+
 Terraform module to create MedusaJS resources
+
+Root module calls these modules which can also be used separately to create independent resources:
+
+- [backend](/modules/backend) - creates MedusaJS backend resources
+- [ecr](/modules/ecr) - creates ECR resources for container image store
+- [elasticache](/modules/elasticache) - creates Redis instance for MedusaJS backend
+- [rds](/modules/rds) - creates RDS database for MedusaJS backend
+- [storefront](/modules/storefront) - creates MedusaJS starter frontend resources
+- [vpc](/modules/vpc) - creates VPC
+
+## Usage
+
+```hcl
+module "medusajs" {
+  source = "u11d-com/terraform-u11d-medusajs"
+
+  ## Required global variables (no defaults)
+  project     = "my-project"
+  environment = "example"
+
+  ecr_storefront_create = true
+
+  // Using example image build for MedusaJS starter
+  backend_container_image = "ghcr.io/u11d-com/medusa-backend:1.20.10-latest"
+  backend_seed_create = true
+  backend_seed_run    = true
+  backend_extra_environment_variables = {
+    "NODE_ENV" : "development"
+  }
+
+  storefront_create          = false // Enable once image is built and pushed
+  storefront_container_image = "xxx" // Full name of the image, including registry and tag
+}
+```
+
+## Conditional creation
+
+The following values are provided to toggle on/off creation of the associated resources as desired:
+
+module "medusajs" {
+  source = "u11d-com/terraform-u11d-medusajs"
+
+  ## Required global variables (no defaults)
+  project     = "my-project"
+  environment = "example"
+
+  ## Conditional creation variables
+  # Disable creation of ECR for backend in case you have external repository
+  ecr_backend_create    = false
+  # Disable creation of ECR for fronend in case you have external repository
+  ecr_storefront_create = false
+  # Disable creation of VPC for resources in case there is existing one
+  vpc_create           = false
+  # Disable creation of Redis instance for MedusaJS backend
+  elasticache_create   = false
+  # Disable creation of Postgresql RDS instance for MedusaJS backend
+  rds_create          = false
+  # Disable creation of MedusaJS backend resources
+  backend_create      = false
+  # Disable seed step for MedusaJS backend
+  backend_seed_create = false
+  # Disable creation of MedusaJS frontend resources
+  storefront_create   = false
+}
+
+## Examples
+
+- [Minimal](/examples/minimal) - minimal configuration needed for deployment
+- [Complete](/examples/complete) - complete example using all available variables
+- [External resources](/examples/external-resources) - example using existing VPC and external image repositories
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~>5.64.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.10.0 |
+| <a name="requirement_archive"></a> [archive](#requirement\_archive) | ~> 2.7.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.84.0 |
+| <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6.3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.64.0 |
-| <a name="provider_null"></a> [null](#provider\_null) | 3.2.2 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.84.0 |
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_backend"></a> [backend](#module\_backend) | ./modules/backend | n/a |
+| <a name="module_ecr_backend"></a> [ecr\_backend](#module\_ecr\_backend) | ./modules/ecr | n/a |
+| <a name="module_ecr_storefront"></a> [ecr\_storefront](#module\_ecr\_storefront) | ./modules/ecr | n/a |
+| <a name="module_elasticache"></a> [elasticache](#module\_elasticache) | ./modules/elasticache | n/a |
+| <a name="module_rds"></a> [rds](#module\_rds) | ./modules/rds | n/a |
+| <a name="module_storefront"></a> [storefront](#module\_storefront) | ./modules/storefront | n/a |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | ./modules/vpc | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aws_alb.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/alb) | resource |
-| [aws_alb_listener.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/alb_listener) | resource |
-| [aws_alb_target_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/alb_target_group) | resource |
-| [aws_amplify_app.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/amplify_app) | resource |
-| [aws_amplify_branch.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/amplify_branch) | resource |
-| [aws_amplify_domain_association.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/amplify_domain_association) | resource |
-| [aws_cloudwatch_log_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
-| [aws_db_instance.postgres](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance) | resource |
-| [aws_db_subnet_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group) | resource |
-| [aws_ecs_cluster.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster) | resource |
-| [aws_ecs_service.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service) | resource |
-| [aws_ecs_task_definition.medusa_task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition) | resource |
-| [aws_elasticache_cluster.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_cluster) | resource |
-| [aws_elasticache_subnet_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_subnet_group) | resource |
-| [aws_iam_policy.amplify](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy.ecs_task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_role.amplify](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role.ecs_task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role_policy_attachment.amplify](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_iam_role_policy_attachment.ecs_task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_internet_gateway.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway) | resource |
-| [aws_route.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
-| [aws_route53_record.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
-| [aws_route53_zone.primary](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
-| [aws_secretsmanager_secret.medusa](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
-| [aws_secretsmanager_secret_version.medusa](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret_version) | resource |
-| [aws_security_group.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_security_group.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_security_group.elasticache](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_security_group.rds](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_subnet.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
-| [aws_subnet.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
-| [aws_vpc.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
-| [aws_vpc_security_group_egress_rule.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
-| [aws_vpc_security_group_egress_rule.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
-| [aws_vpc_security_group_egress_rule.elasticache](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
-| [aws_vpc_security_group_egress_rule.rds](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule) | resource |
-| [aws_vpc_security_group_ingress_rule.alb](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
-| [aws_vpc_security_group_ingress_rule.ecs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
-| [aws_vpc_security_group_ingress_rule.elasticache](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
-| [aws_vpc_security_group_ingress_rule.rds](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule) | resource |
-| [null_resource.trigger_deployment](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
-| [aws_availability_zones.available](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) | data source |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
-| [aws_iam_policy_document.amplify_assume_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_iam_policy_document.amplify_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_iam_policy_document.ecs_task_assume_role_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_iam_policy_document.ecs_task_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_session_context.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_session_context) | data source |
 | [aws_partition.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/partition) | data source |
-| [aws_secretsmanager_secret.rds](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret) | data source |
-| [aws_secretsmanager_secret_version.rds](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_app_count"></a> [app\_count](#input\_app\_count) | Number of docker containers to run. | `number` | `1` | no |
-| <a name="input_app_cpu"></a> [app\_cpu](#input\_app\_cpu) | Fargate instance CPU units to provision (1 vCPU = 1024 CPU units). | `number` | `2048` | no |
-| <a name="input_app_log_group"></a> [app\_log\_group](#input\_app\_log\_group) | Name of the application log group in CloudWatch. | `string` | `"/medusa"` | no |
-| <a name="input_app_logs_prefix"></a> [app\_logs\_prefix](#input\_app\_logs\_prefix) | Application logs prefix. | `string` | `"container"` | no |
-| <a name="input_app_logs_retention"></a> [app\_logs\_retention](#input\_app\_logs\_retention) | Log retention in days. | `number` | `30` | no |
-| <a name="input_app_memory"></a> [app\_memory](#input\_app\_memory) | Fargate instance memory to provision (in MiB). | `number` | `4096` | no |
-| <a name="input_app_port"></a> [app\_port](#input\_app\_port) | Port exposed by the docker image to redirect traffic to. | `number` | `9000` | no |
-| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | Your AWS region. | `any` | n/a | yes |
 | <a name="input_az_count"></a> [az\_count](#input\_az\_count) | Number of AZs to cover in a given region. | `number` | `2` | no |
-| <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | ARN of the default SSL server certificate. | `string` | n/a | yes |
-| <a name="input_create"></a> [create](#input\_create) | Enable resource creation | `bool` | `true` | no |
-| <a name="input_create_backend"></a> [create\_backend](#input\_create\_backend) | Enable backend resources creation | `bool` | `true` | no |
-| <a name="input_create_frontend"></a> [create\_frontend](#input\_create\_frontend) | Enable frontend resources creation | `bool` | `true` | no |
-| <a name="input_create_vpc"></a> [create\_vpc](#input\_create\_vpc) | Enable vpc creation | `bool` | `true` | no |
-| <a name="input_db_allocated_storage"></a> [db\_allocated\_storage](#input\_db\_allocated\_storage) | The allocated storage in gibibytes. | `number` | `5` | no |
-| <a name="input_db_engine_version"></a> [db\_engine\_version](#input\_db\_engine\_version) | The postgres engine version to use. You can provide a prefix of the version such as 8.0 (for 8.0.36). | `string` | `"15.6"` | no |
-| <a name="input_db_instance_class"></a> [db\_instance\_class](#input\_db\_instance\_class) | The instance type of the RDS instance. | `string` | `"db.t3.micro"` | no |
-| <a name="input_db_username"></a> [db\_username](#input\_db\_username) | The username used to authenticate with the PostgreSQL database. | `string` | n/a | yes |
-| <a name="input_ecr_arn"></a> [ecr\_arn](#input\_ecr\_arn) | ARN of Elastic Container Registry. | `string` | n/a | yes |
-| <a name="input_ecr_repository"></a> [ecr\_repository](#input\_ecr\_repository) | ECR repository for the Medusa docker image. | `string` | n/a | yes |
+| <a name="input_backend_admin_cors"></a> [backend\_admin\_cors](#input\_backend\_admin\_cors) | CORS configuration for the admin panel. If not provided, CORS will not be configured. | `string` | `null` | no |
+| <a name="input_backend_admin_credentials"></a> [backend\_admin\_credentials](#input\_backend\_admin\_credentials) | Admin user credentials. If provided, it will be used to create an admin user. | <pre>object({<br/>    email             = string<br/>    password          = optional(string)<br/>    generate_password = optional(bool, true)<br/>  })</pre> | `null` | no |
+| <a name="input_backend_cloudfront_price_class"></a> [backend\_cloudfront\_price\_class](#input\_backend\_cloudfront\_price\_class) | The price class for the backend CloudFront distribution | `string` | `"PriceClass_100"` | no |
+| <a name="input_backend_container_image"></a> [backend\_container\_image](#input\_backend\_container\_image) | Image tag of the docker image to run in the ECS cluster. | `string` | n/a | yes |
+| <a name="input_backend_container_port"></a> [backend\_container\_port](#input\_backend\_container\_port) | Port exposed by the task container to redirect traffic to. | `number` | `9000` | no |
+| <a name="input_backend_container_registry_credentials"></a> [backend\_container\_registry\_credentials](#input\_backend\_container\_registry\_credentials) | Credentials for private container registry authentication. Cannot be used together with backend\_ecr\_arn. | <pre>object({<br/>    username = string<br/>    password = string<br/>  })</pre> | `null` | no |
+| <a name="input_backend_cookie_secret"></a> [backend\_cookie\_secret](#input\_backend\_cookie\_secret) | Secret used for cookie signing. If not provided, a random secret will be generated. | `string` | `null` | no |
+| <a name="input_backend_create"></a> [backend\_create](#input\_backend\_create) | Enable backend resources creation | `bool` | `true` | no |
+| <a name="input_backend_ecr_arn"></a> [backend\_ecr\_arn](#input\_backend\_ecr\_arn) | ARN of Elastic Container Registry. Cannot be used together with backend\_container\_registry\_credentials. | `string` | `null` | no |
+| <a name="input_backend_expose_admin_only"></a> [backend\_expose\_admin\_only](#input\_backend\_expose\_admin\_only) | Whether to expose publicly only /admin paths in the backend | `bool` | `false` | no |
+| <a name="input_backend_extra_environment_variables"></a> [backend\_extra\_environment\_variables](#input\_backend\_extra\_environment\_variables) | Additional environment variables to pass to the backend container | `map(string)` | `{}` | no |
+| <a name="input_backend_extra_secrets"></a> [backend\_extra\_secrets](#input\_backend\_extra\_secrets) | Additional secrets to pass to the backend container | <pre>map(object({<br/>    arn = string<br/>    key = string<br/>  }))</pre> | `{}` | no |
+| <a name="input_backend_extra_security_group_ids"></a> [backend\_extra\_security\_group\_ids](#input\_backend\_extra\_security\_group\_ids) | List of additional security group IDs to associate with the backend ECS service | `list(string)` | `[]` | no |
+| <a name="input_backend_jwt_secret"></a> [backend\_jwt\_secret](#input\_backend\_jwt\_secret) | Secret used for JWT token signing. If not provided, a random secret will be generated. | `string` | `null` | no |
+| <a name="input_backend_logs"></a> [backend\_logs](#input\_backend\_logs) | Logs configuration settings | <pre>object({<br/>    group     = string<br/>    retention = number<br/>    prefix    = string<br/>  })</pre> | <pre>{<br/>  "group": "/medusa-backend",<br/>  "prefix": "container",<br/>  "retention": 30<br/>}</pre> | no |
+| <a name="input_backend_resources"></a> [backend\_resources](#input\_backend\_resources) | ECS Task configuration settings | <pre>object({<br/>    instances = number<br/>    cpu       = number<br/>    memory    = number<br/>  })</pre> | <pre>{<br/>  "cpu": 2048,<br/>  "instances": 1,<br/>  "memory": 4096<br/>}</pre> | no |
+| <a name="input_backend_run_migrations"></a> [backend\_run\_migrations](#input\_backend\_run\_migrations) | Specify backend migrations should be run on start. | `bool` | `true` | no |
+| <a name="input_backend_seed_command"></a> [backend\_seed\_command](#input\_backend\_seed\_command) | Command to run to seed the database. | `string` | `"npx medusa seed -f ./data/seed.json"` | no |
+| <a name="input_backend_seed_create"></a> [backend\_seed\_create](#input\_backend\_seed\_create) | Enable backend seed function creation | `bool` | `false` | no |
+| <a name="input_backend_seed_fail_on_error"></a> [backend\_seed\_fail\_on\_error](#input\_backend\_seed\_fail\_on\_error) | Whether to fail the deployment if the seed command fails. | `bool` | `true` | no |
+| <a name="input_backend_seed_run"></a> [backend\_seed\_run](#input\_backend\_seed\_run) | Specify backend seed should be run after deployment. | `bool` | `false` | no |
+| <a name="input_backend_seed_timeout"></a> [backend\_seed\_timeout](#input\_backend\_seed\_timeout) | Timeout for the seed command. | `number` | `60` | no |
+| <a name="input_backend_store_cors"></a> [backend\_store\_cors](#input\_backend\_store\_cors) | CORS configuration for the store. If not provided, CORS will not be configured. | `string` | `null` | no |
+| <a name="input_backend_target_group_health_check_config"></a> [backend\_target\_group\_health\_check\_config](#input\_backend\_target\_group\_health\_check\_config) | Health check configuration for load balancer target group pointing on backend containers | <pre>object({<br/>    interval            = number<br/>    matcher             = number<br/>    timeout             = number<br/>    path                = string<br/>    healthy_threshold   = number<br/>    unhealthy_threshold = number<br/>  })</pre> | <pre>{<br/>  "healthy_threshold": 3,<br/>  "interval": 30,<br/>  "matcher": 200,<br/>  "path": "/health",<br/>  "timeout": 3,<br/>  "unhealthy_threshold": 3<br/>}</pre> | no |
+| <a name="input_backend_url"></a> [backend\_url](#input\_backend\_url) | Medusa backend URL. Required if backend\_create is false. | `string` | `null` | no |
+| <a name="input_cidr_block"></a> [cidr\_block](#input\_cidr\_block) | CIDR block used in VPC | `string` | `"10.0.0.0/16"` | no |
+| <a name="input_database_url"></a> [database\_url](#input\_database\_url) | Database connection URL. Required if rds\_create is false. | `string` | `null` | no |
+| <a name="input_ecr_backend_create"></a> [ecr\_backend\_create](#input\_ecr\_backend\_create) | Enable backend ECR repository creation | `bool` | `false` | no |
+| <a name="input_ecr_backend_retention_count"></a> [ecr\_backend\_retention\_count](#input\_ecr\_backend\_retention\_count) | How many images to keep in backend repository | `number` | `32` | no |
+| <a name="input_ecr_storefront_create"></a> [ecr\_storefront\_create](#input\_ecr\_storefront\_create) | Enable storefront ECR repository creation | `bool` | `false` | no |
+| <a name="input_ecr_storefront_retention_count"></a> [ecr\_storefront\_retention\_count](#input\_ecr\_storefront\_retention\_count) | How many images to keep in storefront repository | `number` | `32` | no |
+| <a name="input_elasticache_create"></a> [elasticache\_create](#input\_elasticache\_create) | n/a | `bool` | `true` | no |
 | <a name="input_elasticache_node_type"></a> [elasticache\_node\_type](#input\_elasticache\_node\_type) | The Elasticache instance class used. | `string` | `"cache.t3.micro"` | no |
 | <a name="input_elasticache_nodes_num"></a> [elasticache\_nodes\_num](#input\_elasticache\_nodes\_num) | The initial number of cache nodes that the cache cluster will have. | `number` | `1` | no |
 | <a name="input_elasticache_port"></a> [elasticache\_port](#input\_elasticache\_port) | Port exposed by the redis to redirect traffic to. | `number` | `6379` | no |
-| <a name="input_environment"></a> [environment](#input\_environment) | The name of the environment for which infrastructure is being provisioned. | `string` | `"prod"` | no |
-| <a name="input_health_check_healthy_threshold"></a> [health\_check\_healthy\_threshold](#input\_health\_check\_healthy\_threshold) | Number of consecutive health check successes required before considering a target healthy. | `number` | `3` | no |
-| <a name="input_health_check_interval"></a> [health\_check\_interval](#input\_health\_check\_interval) | Approximate amount of time, in seconds, between health checks of an individual target. | `number` | `30` | no |
-| <a name="input_health_check_matcher"></a> [health\_check\_matcher](#input\_health\_check\_matcher) | The HTTP code to use when checking for a successful response from a target. | `number` | `200` | no |
-| <a name="input_health_check_path"></a> [health\_check\_path](#input\_health\_check\_path) | The path to monitor the health status of the service. | `string` | `"/health"` | no |
-| <a name="input_health_check_timeout"></a> [health\_check\_timeout](#input\_health\_check\_timeout) | Amount of time, in seconds, during which no response from a target means a failed health check. | `number` | `3` | no |
-| <a name="input_health_check_unhealthy_threshold"></a> [health\_check\_unhealthy\_threshold](#input\_health\_check\_unhealthy\_threshold) | Number of consecutive health check failures required before considering a target unhealthy. | `number` | `3` | no |
-| <a name="input_listener_port"></a> [listener\_port](#input\_listener\_port) | The port on which the ALB listens for incoming traffic. | `number` | `443` | no |
-| <a name="input_main_domain"></a> [main\_domain](#input\_main\_domain) | Main domain of core and storefront. | `string` | n/a | yes |
-| <a name="input_medusa_admin_password"></a> [medusa\_admin\_password](#input\_medusa\_admin\_password) | The medusa admin password. | `string` | n/a | yes |
-| <a name="input_medusa_admin_username"></a> [medusa\_admin\_username](#input\_medusa\_admin\_username) | The medusa admin username. | `string` | n/a | yes |
-| <a name="input_medusa_core_subdomain"></a> [medusa\_core\_subdomain](#input\_medusa\_core\_subdomain) | The medusa core subdomain. | `string` | n/a | yes |
-| <a name="input_medusa_create_admin_user"></a> [medusa\_create\_admin\_user](#input\_medusa\_create\_admin\_user) | Specify if database should be initilize with admin. | `bool` | `true` | no |
-| <a name="input_medusa_image_tag"></a> [medusa\_image\_tag](#input\_medusa\_image\_tag) | Image tag of the docker image to run in the ECS cluster. | `string` | n/a | yes |
-| <a name="input_medusa_run_migration"></a> [medusa\_run\_migration](#input\_medusa\_run\_migration) | Specify medusa migrations should be run on start. | `bool` | `true` | no |
-| <a name="input_medusa_storefront_code_repository_arn"></a> [medusa\_storefront\_code\_repository\_arn](#input\_medusa\_storefront\_code\_repository\_arn) | ARN of the Medusa Strorefront code repository. | `string` | n/a | yes |
-| <a name="input_medusa_storefront_code_repository_url"></a> [medusa\_storefront\_code\_repository\_url](#input\_medusa\_storefront\_code\_repository\_url) | The url of Medusa Storefront code repository. | `string` | n/a | yes |
-| <a name="input_medusa_storefront_subdomain"></a> [medusa\_storefront\_subdomain](#input\_medusa\_storefront\_subdomain) | The medusa storefront subdomain. | `string` | n/a | yes |
-| <a name="input_project"></a> [project](#input\_project) | The name of the project for which infrastructure is being provisioned. | `string` | `"medusa"` | no |
-| <a name="input_rds_port"></a> [rds\_port](#input\_rds\_port) | Port exposed by the RDS to redirect traffic to. | `number` | `5432` | no |
-| <a name="input_redis_engine_version"></a> [redis\_engine\_version](#input\_redis\_engine\_version) | The version of the redis that will be used to create the Elasticache cluster. You can provide a prefix of the version such as 7.1 (for 7.1.4). | `string` | `"7.1"` | no |
-| <a name="input_route53_evaluate_target_health"></a> [route53\_evaluate\_target\_health](#input\_route53\_evaluate\_target\_health) | Specify if you want Route 53 to determine whether to respond to DNS queries using this resource record set by checking the health of the resource record set. | `string` | `true` | no |
-| <a name="input_route53_zone_id"></a> [route53\_zone\_id](#input\_route53\_zone\_id) | The ID of the hosted zone to contain the record. | `string` | n/a | yes |
-| <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | CIDR block used in VPC | `string` | `"172.16.0.0/16"` | no |
+| <a name="input_elasticache_redis_engine_version"></a> [elasticache\_redis\_engine\_version](#input\_elasticache\_redis\_engine\_version) | The version of the redis that will be used to create the Elasticache cluster. You can provide a prefix of the version such as 7.1 (for 7.1.4). | `string` | `"7.1"` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | The name of the environment for which infrastructure is being provisioned. | `string` | n/a | yes |
+| <a name="input_private_subnet_ids"></a> [private\_subnet\_ids](#input\_private\_subnet\_ids) | List of private subnet IDs. Required if vpc\_create is false. | `list(string)` | `null` | no |
+| <a name="input_project"></a> [project](#input\_project) | The name of the project for which infrastructure is being provisioned. | `string` | n/a | yes |
+| <a name="input_public_subnet_ids"></a> [public\_subnet\_ids](#input\_public\_subnet\_ids) | List of public subnet IDs. Required if vpc\_create is false. | `list(string)` | `null` | no |
+| <a name="input_rds_allocated_storage"></a> [rds\_allocated\_storage](#input\_rds\_allocated\_storage) | The allocated storage in gigabytes. | `number` | `5` | no |
+| <a name="input_rds_create"></a> [rds\_create](#input\_rds\_create) | n/a | `bool` | `true` | no |
+| <a name="input_rds_engine_version"></a> [rds\_engine\_version](#input\_rds\_engine\_version) | The postgres engine version to use. You can provide a prefix of the version such as 8.0 (for 8.0.36). | `string` | `"15.7"` | no |
+| <a name="input_rds_instance_class"></a> [rds\_instance\_class](#input\_rds\_instance\_class) | The instance type of the RDS instance. | `string` | `"db.t3.micro"` | no |
+| <a name="input_rds_port"></a> [rds\_port](#input\_rds\_port) | Port exposed by the RDS. | `number` | `5432` | no |
+| <a name="input_rds_username"></a> [rds\_username](#input\_rds\_username) | The username used to authenticate with the PostgreSQL database. | `string` | `"medusa"` | no |
+| <a name="input_redis_url"></a> [redis\_url](#input\_redis\_url) | Redis connection URL. Required if elasticache\_create is false. | `string` | `null` | no |
+| <a name="input_storefront_cloudfront_price_class"></a> [storefront\_cloudfront\_price\_class](#input\_storefront\_cloudfront\_price\_class) | The price class for the CloudFront distribution | `string` | `"PriceClass_100"` | no |
+| <a name="input_storefront_container_image"></a> [storefront\_container\_image](#input\_storefront\_container\_image) | Image tag of the docker image to run in the ECS cluster. | `string` | n/a | yes |
+| <a name="input_storefront_container_port"></a> [storefront\_container\_port](#input\_storefront\_container\_port) | Port exposed by the task container to redirect traffic to. | `number` | `8000` | no |
+| <a name="input_storefront_container_registry_credentials"></a> [storefront\_container\_registry\_credentials](#input\_storefront\_container\_registry\_credentials) | Credentials for private container registry authentication. Cannot be used together with storefront\_ecr\_arn. | <pre>object({<br/>    username = string<br/>    password = string<br/>  })</pre> | `null` | no |
+| <a name="input_storefront_create"></a> [storefront\_create](#input\_storefront\_create) | Enable storefront resources creation | `bool` | `false` | no |
+| <a name="input_storefront_ecr_arn"></a> [storefront\_ecr\_arn](#input\_storefront\_ecr\_arn) | ARN of Elastic Container Registry. Cannot be used together with storefront\_container\_registry\_credentials. | `string` | `null` | no |
+| <a name="input_storefront_extra_environment_variables"></a> [storefront\_extra\_environment\_variables](#input\_storefront\_extra\_environment\_variables) | Additional environment variables to pass to the storefront container | `map(string)` | `{}` | no |
+| <a name="input_storefront_extra_secrets"></a> [storefront\_extra\_secrets](#input\_storefront\_extra\_secrets) | Additional secrets to pass to the storefront container | <pre>map(object({<br/>    arn = string<br/>    key = string<br/>  }))</pre> | `{}` | no |
+| <a name="input_storefront_extra_security_group_ids"></a> [storefront\_extra\_security\_group\_ids](#input\_storefront\_extra\_security\_group\_ids) | List of additional security group IDs to associate with the storefront ECS service | `list(string)` | `[]` | no |
+| <a name="input_storefront_logs"></a> [storefront\_logs](#input\_storefront\_logs) | Logs configuration settings | <pre>object({<br/>    group     = string<br/>    retention = number<br/>    prefix    = string<br/>  })</pre> | <pre>{<br/>  "group": "/medusa-storefront",<br/>  "prefix": "container",<br/>  "retention": 30<br/>}</pre> | no |
+| <a name="input_storefront_resources"></a> [storefront\_resources](#input\_storefront\_resources) | ECS Task configuration settings | <pre>object({<br/>    instances = number<br/>    cpu       = number<br/>    memory    = number<br/>  })</pre> | <pre>{<br/>  "cpu": 1024,<br/>  "instances": 1,<br/>  "memory": 2048<br/>}</pre> | no |
+| <a name="input_storefront_target_group_health_check_config"></a> [storefront\_target\_group\_health\_check\_config](#input\_storefront\_target\_group\_health\_check\_config) | Health check configuration for load balancer target group pointing on storefront containers | <pre>object({<br/>    interval            = number<br/>    matcher             = number<br/>    timeout             = number<br/>    path                = string<br/>    healthy_threshold   = number<br/>    unhealthy_threshold = number<br/>  })</pre> | <pre>{<br/>  "healthy_threshold": 3,<br/>  "interval": 30,<br/>  "matcher": 200,<br/>  "path": "/api",<br/>  "timeout": 3,<br/>  "unhealthy_threshold": 3<br/>}</pre> | no |
+| <a name="input_vpc_create"></a> [vpc\_create](#input\_vpc\_create) | Enable vpc creation | `bool` | `true` | no |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | Existing VPC ID. Required if vpc\_create is false. | `string` | `null` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_medusa_domain"></a> [medusa\_domain](#output\_medusa\_domain) | n/a |
+| <a name="output_backend_url"></a> [backend\_url](#output\_backend\_url) | n/a |
+| <a name="output_ecr_backend_url"></a> [ecr\_backend\_url](#output\_ecr\_backend\_url) | n/a |
+| <a name="output_ecr_storefront_url"></a> [ecr\_storefront\_url](#output\_ecr\_storefront\_url) | n/a |
+| <a name="output_storefront_url"></a> [storefront\_url](#output\_storefront\_url) | n/a |
 <!-- END_TF_DOCS -->
