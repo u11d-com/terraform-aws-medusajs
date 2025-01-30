@@ -115,7 +115,7 @@ After successful deployment, Terraform will display output values. These include
 - Verify AWS credentials: Ensure your AWS CLI is configured correctly and has the required permissions.
 - Consult module documentation: For specific issues related to the `u11d-com/terraform-u11d-medusajs` module, refer to its documentation.
 - Seek community support: If you encounter issues you can not solve on your own, consider seeking help from the Terraform community or in the module's repository's issue tracker.
-- [Contact us](mailto:hello@u11d.com) for support or development
+- :email: [Contact us](mailto:hello@u11d.com) for support or development
 
 ## Contributing
 Feel free to contribute to this example or the `u11d-com/terraform-u11d-medusajs` module. Bug fixes, new features, and documentation improvements are welcome. Fork the repository, make your changes, and submit a pull request.
@@ -158,3 +158,6 @@ No inputs.
 | <a name="output_ecr_storefront_url"></a> [ecr\_storefront\_url](#output\_ecr\_storefront\_url) | The URL of the storefront ECR repository. Only available when ecr\_storefront\_create is true. |
 | <a name="output_storefront_url"></a> [storefront\_url](#output\_storefront\_url) | The URL of the storefront application. Only available when storefront\_create is true. |
 <!-- END_TF_DOCS -->
+
+---
+:heart: _Technology made with passion by u11d_
