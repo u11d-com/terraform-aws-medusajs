@@ -1,17 +1,47 @@
-# terraform-u11d-medusajs
+# Terraform Module for MedusaJS on AWS
 
-Terraform module to create MedusaJS resources
+This Terraform module provides a flexible and scalable solution for deploying the [MedusaJS](https://medusajs.com/) e-commerce platform on Amazon Web Services (AWS). It allows users to create and manage all necessary infrastructure components, from basic deployments to more complex, customized configurations.
 
-Root module calls these modules which can also be used separately to create independent resources:
+This module provides a complete set of composable sub-modules for each component of MedusaJS Infrastructure. These sub-modules can be used independently to deploy certain parts of infrastructure, but are combined inside the root module to deploy everything at once.
 
-- [backend](/modules/backend) - creates MedusaJS backend resources
-- [ecr](/modules/ecr) - creates ECR resources for container image store
-- [elasticache](/modules/elasticache) - creates Redis instance for MedusaJS backend
-- [rds](/modules/rds) - creates RDS database for MedusaJS backend
-- [storefront](/modules/storefront) - creates MedusaJS starter frontend resources
-- [vpc](/modules/vpc) - creates VPC
+## Table of Contents
+
+- [Features](#features)
+- [Module Structure](#module-structure)
+- [Usage](#usage)
+  - [Basic Usage](#basic-usage)
+  - [Conditional Resource Creation](#conditional-resource-creation)
+- [Examples](#examples)
+- [Inputs](#inputs)
+- [Outputs](#outputs)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Features
+
+- **Modular Design:** The module is composed of sub-modules for each part of the infrastructure, providing a highly flexible and composable solution.
+- **Comprehensive Resource Management:** Supports creation and management of essential MedusaJS infrastructure including VPC, subnets, ECR repositories, ElastiCache Redis, RDS PostgreSQL, backend, and storefront applications.
+- **Customizable Configurations:** Allows for extensive customization of each component through a wide range of input variables.
+- **Flexibility:** Supports both creating new infrastructure and integrating with existing AWS resources.
+- **Ease of Use:** Provides sane defaults and clear examples for quick setup and deployment.
+- **Scalable:** Designed to support both small and large-scale deployments of MedusaJS.
+
+## Module Structure
+
+This module is composed of the following sub-modules, each responsible for deploying specific resources. These sub-modules are also available as stand-alone modules and can be found in the `modules` directory.
+
+-   [`backend`](/modules/backend): Creates resources for the MedusaJS backend application.
+-   [`ecr`](/modules/ecr): Creates Elastic Container Registry (ECR) repositories for storing Docker images.
+-   [`elasticache`](/modules/elasticache): Creates an ElastiCache Redis instance for MedusaJS backend (communication/cache).
+-   [`rds`](/modules/rds): Creates an RDS PostgreSQL database instance for data persistence.
+-   [`storefront`](/modules/storefront): Creates resources for the MedusaJS storefront application.
+-   [`vpc`](/modules/vpc): Creates a Virtual Private Cloud (VPC) with necessary networking components.
 
 ## Usage
+
+### Basic Usage
+
+To use this module, include it in your Terraform configuration file, specifying the source and required variables. The following example shows the most basic usage:
 
 ```hcl
 module "medusajs" {
@@ -36,9 +66,16 @@ module "medusajs" {
 }
 ```
 
-## Conditional creation
+This example demonstrates how to use the root module to deploy MedusaJS with the most basic configuration. In the example:
+  - project and environment variables are set to `my-project` and `example` respectively.
+  - ECR repository will be created for storefront, as `ecr_storefront_create` is set to `true`.
+  - MedusaJS backend will be deployed using publicly available container image `ghcr.io/u11d-com/medusa-backend:1.20.10-latest` from GitHub container registry.
+  - Database will be seeded after deployment by running seeding command, as `backend_seed_create` and `backend_seed_run` are set to `true`.
+  - Example environment variable `NODE_ENV` is set to `development` value using `backend_extra_environment_variables` variable.
+  - Storefront deployment is disabled, but can be enabled by setting `storefront_create` to `true` and passing proper image url using `storefront_container_image` variable.
 
-The following values are provided to toggle on/off creation of the associated resources as desired:
+## Conditional Resource Creation
+The module allows for conditional creation of resources, providing a way to manage infrastructure and integrate with existing resources. To disable the creation of a specific resource, set its corresponding `*_create` variable to `false`. For example:
 
 ```hcl
 module "medusajs" {
@@ -68,11 +105,38 @@ module "medusajs" {
 }
 ```
 
+In this example, all resource creation is disabled and root module will deploy nothing, but still it provides a way to manage existing infrastructure.
+
 ## Examples
 
-- [Minimal](/examples/minimal) - minimal configuration needed for deployment
-- [Complete](/examples/complete) - complete example using all available variables
-- [External resources](/examples/external-resources) - example using existing VPC and external image repositories
+- [Minimal](/examples/minimal) - Minimal configuration needed for a basic deployment.
+- [Complete](/examples/complete) - Complete example using all available variables, showcasing full configuration options.
+- [External resources](/examples/external-resources) - Example using an existing VPC and external image repositories.
+
+## Inputs
+Detailed information about each input variable can be found in the module's documentation, or in the variables.tf file in the root directory.
+
+## Outputs
+The module exposes a variety of outputs that allow users to access the deployed resources. These outputs are detailed in the outputs.tf file in the root directory.
+
+## Troubleshooting
+  - Check Terraform logs: If deployment fails, carefully inspect the logs output by Terraform.
+  - Verify AWS credentials: Ensure your AWS CLI is configured correctly and has the required permissions.
+  - Consult module documentation: For specific issues related to the u11d-com/terraform-u11d-medusajs module, refer to its documentation.
+  - Seek community support: If you encounter issues you can not solve on your own, consider seeking help from the Terraform community or in the module's repository's issue tracker.
+
+## Contact
+
+If you have any questions, comments, or need assistance with this module, please feel free to reach out to us via email at [hello@u11d.com](mailto:hello@u11d.com). We are happy to help with any questions related to module usage or to resolve issues.
+
+Additionally, if you require commercial development services for your MedusaJS platform, we offer expertise in building custom solutions, integrations, and more. Please contact us at the same email address to discuss your project needs.
+
+## Contributing
+We welcome contributions to this module! If you have bug fixes, new features, or documentation improvements, feel free to fork the repository, make your changes, and submit a pull request.
+
+## License
+This example is licensed under the [Apache-2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -187,3 +251,6 @@ module "medusajs" {
 | <a name="output_ecr_storefront_url"></a> [ecr\_storefront\_url](#output\_ecr\_storefront\_url) | n/a |
 | <a name="output_storefront_url"></a> [storefront\_url](#output\_storefront\_url) | n/a |
 <!-- END_TF_DOCS -->
+
+---
+:heart: _Technology made with passion by u11d_
