@@ -1,6 +1,6 @@
 # MedusaJS Complete Infrastructure on AWS with Terraform
 
-This Terraform configuration deploys a complete MedusaJS e-commerce platform infrastructure on AWS using the publicly available [`u11d-com/terraform-u11d-medusajs`](https://github.com/u11d-com/terraform-u11d-medusajs) module, demonstrating the usage of *all available variables and options.* This example is designed to showcase the full spectrum of customization and configuration capabilities offered by the module, providing a robust and feature-rich deployment.
+This Terraform configuration deploys a complete MedusaJS e-commerce platform infrastructure on AWS using the publicly available [`u11d-com/terraform-aws-medusajs`](https://github.com/u11d-com/terraform-aws-medusajs) module, demonstrating the usage of *all available variables and options.* This example is designed to showcase the full spectrum of customization and configuration capabilities offered by the module, providing a robust and feature-rich deployment.
 
 ## Table of Contents
 
@@ -57,10 +57,10 @@ Before you begin, make sure you have the following:
 
 ### Configuration
 
-1.  Clone this repository: [terraform-u11d-medusajs](https://github.com/u11d-com/terraform-u11d-medusajs)
+1.  Clone this repository: [terraform-aws-medusajs](https://github.com/u11d-com/terraform-aws-medusajs)
     ```bash
-    git clone https://github.com/u11d-com/terraform-u11d-medusajs.git
-    cd terraform-u11d-medusajs
+    git clone https://github.com/u11d-com/terraform-aws-medusajs.git
+    cd terraform-aws-medusajs/examples/complete
     ```
 
 <details>
@@ -71,7 +71,7 @@ This file contains the Terraform configuration for deploying the complete Medusa
   - `terraform` block: Specifies the required Terraform version.
   - `locals` block: Defines local variables for project and environment names. You can customize these.
   - `provider "aws"` block: Configures the AWS provider and sets default tags for all resources. Change the region to match your desired location.
-  - `module "complete"` block: This is the core of the setup. It uses the `u11d-com/terraform-u11d-medusajs` module to create a complete infrastructure, using all available parameters. Here's a breakdown of the key parameter categories:
+  - `module "complete"` block: This is the core of the setup. It uses the `u11d-com/terraform-aws-medusajs` module to create a complete infrastructure, using all available parameters. Here's a breakdown of the key parameter categories:
   - **Global Settings:**
     - `project` and `environment`: These parameters are passed to the module and may be used to tag the AWS resources or other logic inside the module
   - **ECR Configuration:**
@@ -163,7 +163,7 @@ After successful deployment, Terraform will display output values. These include
 
 - Adjust the `locals` block: Modify the project and environment variables to suit your needs.
 - Change the AWS `region`: Modify the region value within the provider "aws" block.
-- Customize the module parameters: Explore the documentation for the `u11d-com/terraform-u11d-medusajs` module to understand all possible customization options. You can find the documentation in the module's repository or in the Terraform Registry.
+- Customize the module parameters: Explore the documentation for the `u11d-com/terraform-aws-medusajs` module to understand all possible customization options. You can find the documentation in the module's repository or in the Terraform Registry.
 - **ECR Configuration:** Customize the retention policies of ECR repositories
 - **Network Configuration:** Adjust the VPC settings like `cidr_block` and number of `az_count`
 - **Redis and PostgreSQL Configuration:** Change instance types, number of nodes, and database versions.
@@ -176,13 +176,13 @@ After successful deployment, Terraform will display output values. These include
 - Verify AWS credentials: Ensure your AWS CLI is configured correctly and has the required permissions.
 - Verify VPC settings: Ensure that the VPC and subnets configuration is proper.
 - Verify External registry credentials: Ensure that external registry credentials are correct and user has proper permissions to access images.
-- Consult module documentation: For specific issues related to the `u11d-com/terraform-u11d-medusajs` module, refer to its documentation.
+- Consult module documentation: For specific issues related to the `u11d-com/terraform-aws-medusajs` module, refer to its documentation.
 - Seek community support: If you encounter issues you can not solve on your own, consider seeking help from the Terraform community or in the module's repository's issue tracker.
-- :email: [Contact us](mailto:hello@u11d.com) to for support or development
+- :email: [Contact us](mailto:hello@u11d.com) to for support or development.
 
 ## Contributing
 
-Feel free to contribute to this example or the `u11d-com/terraform-u11d-medusajs` module. Bug fixes, new features, and documentation improvements are welcome. Fork the repository, make your changes, and submit a pull request.
+Feel free to contribute to this example or the `u11d-com/terraform-aws-medusajs` module. Bug fixes, new features, and documentation improvements are welcome. Fork the repository, make your changes, and submit a pull request.
 
 ## License
 

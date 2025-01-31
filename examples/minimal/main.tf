@@ -19,7 +19,7 @@ provider "aws" {
 }
 
 module "minimal" {
-  source = "u11d-com/terraform-u11d-medusajs"
+  source = "u11d-com/terraform-aws-medusajs"
 
   project     = local.project
   environment = local.environment

@@ -1,6 +1,6 @@
 # MedusaJS Infrastructure on AWS with External Resources: Existing VPC and External Image Repository
 
-This Terraform configuration deploys a MedusaJS e-commerce platform infrastructure on AWS using the publicly available [`u11d-com/terraform-u11d-medusajs`](https://github.com/u11d-com/terraform-u11d-medusajs) module, utilizing **existing** VPC and external container registries. In addition to that, it also deploys ElastiCache Redis and RDS PostgreSQL databases as part of its infrastructure. This example demonstrates how to integrate your existing AWS infrastructure with the MedusaJS deployment and includes essential database components.
+This Terraform configuration deploys a MedusaJS e-commerce platform infrastructure on AWS using the publicly available [`u11d-com/terraform-aws-medusajs`](https://github.com/u11d-com/terraform-aws-medusajs) module, utilizing **existing** VPC and external container registries. In addition to that, it also deploys ElastiCache Redis and RDS PostgreSQL databases as part of its infrastructure. This example demonstrates how to integrate your existing AWS infrastructure with the MedusaJS deployment and includes essential database components.
 
 ## Table of Contents
 
@@ -30,14 +30,15 @@ This Terraform configuration deploys a MedusaJS e-commerce platform infrastructu
 
 ## Deployment Strategy
 
-MedusaJS starter kits typically use the Next.js framework to build the storefront web application. Next.js requires that the MedusaJS backend is available and responsive during the build process to properly fetch data and create a fully functional storefront. This is important because storefront will be built with the API provided by backend application.
+MedusaJS starter kits typically use the Next.js framework to build the storefront web application. Next.js requires that the MedusaJS backend is available and responsive during the build process to properly fetch data and create a fully functional storefront. This is important because the storefront will be built using the API provided by the backend application.
 
-Therefore, the deployment process can be divided into two main steps:
+This module is designed to integrate with *existing* infrastructure and uses *external* container registries for your MedusaJS storefront image. The typical deployment process involves the following steps:
 
 1. **Deploy the MedusaJS backend:** First, you must deploy the backend infrastructure using this Terraform module. Obtain the backend URL from the module's output.
-1. **Build and Deploy the storefront:** After the backend is deployed and running, you can proceed to build your Next.js storefront application, pointing it to deployed backend URL from step 1. Once storefront application is built, deploy it to the infrastructure of your choice. If you already have prebuilt storefront application as a Docker image, you can use this module to deploy it, by providing `storefront_container_image` value.
+2.  **Build and push the storefront image:** Build your Next.js storefront application, pointing it to the deployed backend URL from step 1. Then, either build a Docker image of your storefront and push it to your *external* container registry, *or use a pre-built storefront image and proceed to step 3*.
+3.  **Deploy the storefront:** Finally, you can configure this module to deploy storefront from the image stored in your *external* registry, by setting `storefront_create` option to true and providing proper image path, including the tag, using `storefront_container_image` variable, as well as providing registry credentials. If you already have a prebuilt storefront application as a Docker image, you can use this module to deploy it from your *external* registry, by providing the `storefront_container_image` variable with the full image path, including the tag, and relevant registry credentials.
 
-This module focuses on the backend deployment but can deploy storefront if `storefront_create` option is set to true and proper `storefront_container_image` is provided.
+While this module primarily focuses on backend deployment, it also supports storefront deployment as mentioned in step 3.
 
 ## Prerequisites
 
@@ -49,16 +50,16 @@ Before you begin, make sure you have the following:
 - **Basic understanding of Terraform:** Familiarity with basic Terraform concepts like providers, modules, and outputs.
 - **Docker:** (Optional) If you plan to create custom Docker images for MedusaJS. Install from [official Docker website](https://docs.docker.com/engine/install/).
 - **Existing AWS VPC:** You must have an existing VPC with available public and private subnets. You'll need to provide the IDs of these resources.
-- **External Container Registry:** You must have access to a container registry that hosts your MedusaJS backend and storefront Docker images. You'll need the registry URL, username, and password if authentication is required.
+- **External Container Registry:** You must have access to a container registry that hosts your MedusaJS backend and storefront containers images. You'll need the registry URL, username, and password if authentication is required.
 
 ## Usage
 
 ### Configuration
 
-1. Clone this repository: [terraform-u11d-medusajs](https://github.com/u11d-com/terraform-u11d-medusajs)
+1. Clone this repository: [terraform-aws-medusajs](https://github.com/u11d-com/terraform-aws-medusajs)
     ```bash
-    git clone https://github.com/u11d-com/terraform-u11d-medusajs.git
-    cd terraform-u11d-medusajs
+    git clone https://github.com/u11d-com/terraform-aws-medusajs.git
+    cd terraform-aws-medusajs/examples/external-resources
     ```
 
 <details>
@@ -69,7 +70,7 @@ This file contains the Terraform configuration for deploying the MedusaJS infras
   - terraform block: Specifies the required Terraform version.
   - locals block: Defines local variables for project and environment names. You can customize these.
   - provider "aws" block: Configures the AWS provider and sets default tags for all resources. Change the region to match your desired location.
-  - module "external_resources" block: This is the core of the setup. It uses the `u11d-com/terraform-u11d-medusajs` module to create your infrastructure with external resources. Here's a breakdown of the key parameters:
+  - module "external_resources" block: This is the core of the setup. It uses the `u11d-com/terraform-aws-medusajs` module to create your infrastructure with external resources. Here's a breakdown of the key parameters:
     - source: The location of the Terraform module.
     - project and environment: These parameters are passed to the module and may be used to tag the AWS resources or other logic inside the module
     - vpc_create: Set to `false` to indicate usage of an existing VPC.
@@ -116,9 +117,6 @@ This file contains the Terraform configuration for deploying the MedusaJS infras
 ### Outputs
 
 After successful deployment, Terraform will display output values. These include:
-
-- `ecr_backend_url`: The URL of the backend ECR repository (only available if `ecr_backend_create = true` in the module). In this example, this output will be empty as no ECR repository will be created.
-- `ecr_storefront_url`: The URL of the storefront ECR repository (only available if `ecr_storefront_create = true` in the module).  In this example, this output will be empty as no ECR repository will be created.
 - `backend_url`: The URL of the deployed backend application.
 - `storefront_url`: The URL of the deployed storefront application.
 
@@ -126,7 +124,7 @@ After successful deployment, Terraform will display output values. These include
 
 - Adjust the `locals` block: Modify the project and environment variables to suit your needs.
 - Change the AWS `region`: Modify the region value within the provider "aws" block.
-- Customize the module parameters: Explore the documentation for the `u11d-com/terraform-u11d-medusajs` module to understand all possible customization options. You can find the documentation in the module's repository or in the Terraform Registry.
+- Customize the module parameters: Explore the documentation for the `u11d-com/terraform-aws-medusajs` module to understand all possible customization options. You can find the documentation in the module's repository or in the Terraform Registry.
 - **Use existing VPC:** Make sure that `vpc_create` is set to `false` and provide correct `vpc_id`, `public_subnet_ids`, and `private_subnet_ids` values.
 - **Use external container registries:** Provide valid container image URLs, `backend_container_image` and `storefront_container_image` , and credentials if needed,  `backend_container_registry_credentials` and `storefront_container_registry_credentials`.
 - Configure additional environment variables: Add more environment variables to `backend_extra_environment_variables` to configure your MedusaJS application.
@@ -137,13 +135,13 @@ After successful deployment, Terraform will display output values. These include
 - Verify AWS credentials: Ensure your AWS CLI is configured correctly and has the required permissions.
 - Verify VPC and subnet settings: Ensure the provided VPC and subnet IDs are correct and that the subnets have the required configurations.
 - Verify External registry credentials: Ensure that external registry credentials are correct and user has proper permissions to access images.
-- Consult module documentation: For specific issues related to the `u11d-com/terraform-u11d-medusajs` module, refer to its documentation.
+- Consult module documentation: For specific issues related to the `u11d-com/terraform-aws-medusajs` module, refer to its documentation.
 - Seek community support: If you encounter issues you can not solve on your own, consider seeking help from the Terraform community or in the module's repository's issue tracker.
-- :email: [Contact us](mailto:hello@u11d.com) for support or development
+- :email: [Contact us](mailto:hello@u11d.com) for support or development.
 
 ## Contributing
 
-Feel free to contribute to this example or the `u11d-com/terraform-u11d-medusajs` module. Bug fixes, new features, and documentation improvements are welcome. Fork the repository, make your changes, and submit a pull request.
+Feel free to contribute to this example or the `u11d-com/terraform-aws-medusajs` module. Bug fixes, new features, and documentation improvements are welcome. Fork the repository, make your changes, and submit a pull request.
 
 ## License
 

@@ -45,7 +45,7 @@ To use this module, include it in your Terraform configuration file, specifying 
 
 ```hcl
 module "medusajs" {
-  source = "u11d-com/terraform-u11d-medusajs"
+  source = "u11d-com/terraform-aws-medusajs"
 
   ## Required global variables (no defaults)
   project     = "my-project"
@@ -79,7 +79,7 @@ The module allows for conditional creation of resources, providing a way to mana
 
 ```hcl
 module "medusajs" {
-  source = "u11d-com/terraform-u11d-medusajs"
+  source = "u11d-com/terraform-aws-medusajs"
 
   ## Required global variables (no defaults)
   project     = "my-project"
@@ -114,15 +114,15 @@ In this example, all resource creation is disabled and root module will deploy n
 - [External resources](/examples/external-resources) - Example using an existing VPC and external image repositories.
 
 ## Inputs
-Detailed information about each input variable can be found in the module's documentation, or in the [variables.tf](/variables.tf) file in the root directory.
+Detailed information about each input variable can be found in the module's documentation, or in the [variables.tf](variables.tf) file in the root directory.
 
 ## Outputs
-The module exposes a variety of outputs that allow users to access the deployed resources. These outputs are detailed in the [outputs.tf](/outputs.tf) file in the root directory.
+The module exposes a variety of outputs that allow users to access the deployed resources. These outputs are detailed in the [outputs.tf](outputs.tf) file in the root directory.
 
 ## Troubleshooting
   - Check Terraform logs: If deployment fails, carefully inspect the logs output by Terraform.
   - Verify AWS credentials: Ensure your AWS CLI is configured correctly and has the required permissions.
-  - Consult module documentation: For specific issues related to the u11d-com/terraform-u11d-medusajs module, refer to its documentation.
+  - Consult module documentation: For specific issues related to the u11d-com/terraform-aws-medusajs module, refer to its documentation.
   - Seek community support: If you encounter issues you can not solve on your own, consider seeking help from the Terraform community or in the module's repository's issue tracker.
 
 ## Contact
