@@ -8,9 +8,9 @@ This Terraform configuration deploys a complete MedusaJS e-commerce platform inf
 - [Deployment Strategy](#deployment-strategy)
 - [Prerequisites](#prerequisites)
 - [Usage](#usage)
-    - [Configuration](#configuration)
-    - [Deployment](#deployment)
-    - [Outputs](#outputs)
+  - [Configuration](#configuration)
+  - [Deployment](#deployment)
+  - [Outputs](#outputs)
 - [Customization](#customization)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
@@ -37,8 +37,8 @@ MedusaJS starter kits typically use the Next.js framework to build the storefron
 
 Therefore, the deployment process can be divided into two main steps:
 
-1.  **Deploy the MedusaJS backend:** First, you must deploy the backend infrastructure using this Terraform module. Obtain the backend URL from the module's output.
-2.  **Build and Deploy the storefront:** After the backend is deployed and running, you can proceed to build your Next.js storefront application, pointing it to deployed backend URL from step 1. Once storefront application is built, deploy it to the infrastructure of your choice. If you already have prebuilt storefront application as a Docker image, you can use this module to deploy it, by providing `storefront_container_image` value.
+1. **Deploy the MedusaJS backend:** First, you must deploy the backend infrastructure using this Terraform module. Obtain the backend URL from the module's output.
+2. **Build and Deploy the storefront:** After the backend is deployed and running, you can proceed to build your Next.js storefront application, pointing it to deployed backend URL from step 1. Once storefront application is built, deploy it to the infrastructure of your choice. If you already have prebuilt storefront application as a Docker image, you can use this module to deploy it, by providing `storefront_container_image` value.
 
 This module focuses on the backend deployment but can deploy storefront if `storefront_create` option is set to true and proper `storefront_container_image` is provided.
 
@@ -46,12 +46,12 @@ This module focuses on the backend deployment but can deploy storefront if `stor
 
 Before you begin, make sure you have the following:
 
--   **Terraform:** Version `~> 1.10.0` or higher installed. You can download it from the [official Terraform website](https://www.terraform.io/downloads.html).
--   **AWS Account:** An active AWS account with appropriate permissions to create resources.
--   **AWS CLI:** The AWS Command Line Interface configured with your credentials. You can find instructions on how to install and configure the AWS CLI [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
--   **Basic understanding of Terraform:** Familiarity with basic Terraform concepts like providers, modules, and outputs.
--   **Docker:** (Optional) If you plan to create custom Docker images for MedusaJS. Install from [official Docker website](https://docs.docker.com/engine/install/).
--   **Custom MedusaJS Docker Images:**  You should have Docker images prepared for both the MedusaJS backend and storefront and have their URLs ready.
+- **Terraform:** Version `~> 1.10.0` or higher installed. You can download it from the [official Terraform website](https://www.terraform.io/downloads.html).
+- **AWS Account:** An active AWS account with appropriate permissions to create resources.
+- **AWS CLI:** The AWS Command Line Interface configured with your credentials. You can find instructions on how to install and configure the AWS CLI [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+- **Basic understanding of Terraform:** Familiarity with basic Terraform concepts like providers, modules, and outputs.
+- **Docker:** (Optional) If you plan to create custom Docker images for MedusaJS. Install from [official Docker website](https://docs.docker.com/engine/install/).
+- **Custom MedusaJS Docker Images:**  You should have Docker images prepared for both the MedusaJS backend and storefront and have their URLs ready.
 
 ## Usage
 
@@ -59,11 +59,15 @@ Before you begin, make sure you have the following:
 
 1.  Clone this repository: [terraform-u11d-medusajs](https://github.com/u11d-com/terraform-u11d-medusajs)
     ```bash
-    git clone git@github.com:u11d-com/terraform-u11d-medusajs.git
+    git clone https://github.com/u11d-com/terraform-u11d-medusajs.git
     cd terraform-u11d-medusajs
     ```
-2.  Review the `main.tf` file: This file contains the Terraform configuration for deploying the complete MedusaJS infrastructure.
 
+<details>
+
+<summary>2. Review the [main.tf](/main.tf) file (click to expand)</summary>
+
+This file contains the Terraform configuration for deploying the complete MedusaJS infrastructure.
   - `terraform` block: Specifies the required Terraform version.
   - `locals` block: Defines local variables for project and environment names. You can customize these.
   - `provider "aws"` block: Configures the AWS provider and sets default tags for all resources. Change the region to match your desired location.
@@ -121,6 +125,7 @@ Before you begin, make sure you have the following:
     - `storefront_extra_environment_variables`: Extra environment variables for the storefront application.
     - `storefront_extra_secrets`: Extra secrets to inject into storefront application.
   - `output` blocks: Define values that will be displayed after deployment.
+</details>
 
 ### Deployment
 

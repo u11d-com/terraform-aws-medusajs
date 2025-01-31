@@ -8,9 +8,9 @@ This Terraform configuration deploys a MedusaJS e-commerce platform infrastructu
 - [Deployment Strategy](#deployment-strategy)
 - [Prerequisites](#prerequisites)
 - [Usage](#usage)
-    - [Configuration](#configuration)
-    - [Deployment](#deployment)
-    - [Outputs](#outputs)
+  - [Configuration](#configuration)
+  - [Deployment](#deployment)
+  - [Outputs](#outputs)
 - [Customization](#customization)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
@@ -57,10 +57,15 @@ Before you begin, make sure you have the following:
 
 1. Clone this repository: [terraform-u11d-medusajs](https://github.com/u11d-com/terraform-u11d-medusajs)
     ```bash
-    git clone git@github.com:u11d-com/terraform-u11d-medusajs.git
+    git clone https://github.com/u11d-com/terraform-u11d-medusajs.git
     cd terraform-u11d-medusajs
     ```
-2. Review the `main.tf` file: This file contains the Terraform configuration for deploying the MedusaJS infrastructure.
+
+<details>
+
+<summary>2. Review the [main.tf](/main.tf) file (click to expand)</summary>
+
+This file contains the Terraform configuration for deploying the MedusaJS infrastructure.
   - terraform block: Specifies the required Terraform version.
   - locals block: Defines local variables for project and environment names. You can customize these.
   - provider "aws" block: Configures the AWS provider and sets default tags for all resources. Change the region to match your desired location.
@@ -82,6 +87,7 @@ Before you begin, make sure you have the following:
     - elasticache_create: Specifies if to create ElastiCache Redis cluster.
     - rds_create: Specifies if to create RDS PostgreSQL database.
   - output blocks: Define values that will be displayed after deployment.
+</details>
 
 ### Deployment
 

@@ -67,7 +67,7 @@ module "medusajs" {
 ```
 
 This example demonstrates how to use the root module to deploy MedusaJS with the most basic configuration. In the example:
-  - project and environment variables are set to `my-project` and `example` respectively and will be used to fill resource tags
+  - project and environment variables are set to `my-project` and `example` respectively and will be used to fill resource tags.
   - ECR repository will be created for storefront, as `ecr_storefront_create` is set to `true`.
   - MedusaJS backend will be deployed using publicly available container image `ghcr.io/u11d-com/medusa-backend:1.20.10-latest` from GitHub container registry.
   - Database will be seeded after deployment by running seeding command, as `backend_seed_create` and `backend_seed_run` are set to `true`.
