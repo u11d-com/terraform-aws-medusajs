@@ -44,7 +44,7 @@ While this module primarily focuses on backend deployment, it also supports stor
 
 Before you begin, make sure you have the following:
 
-- **Terraform:** Version `~> 1.10.0` or higher installed. You can download it from the [official Terraform website](https://www.terraform.io/downloads.html).
+- **Terraform:** Version `~> 1.9` or higher installed. You can download it from the [official Terraform website](https://www.terraform.io/downloads.html).
 - **AWS Account:** An active AWS account with appropriate permissions to create resources.
 - **AWS CLI:** The AWS Command Line Interface configured with your credentials. You can find instructions on how to install and configure the AWS CLI [here](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
 - **Basic understanding of Terraform:** Familiarity with basic Terraform concepts like providers, modules, and outputs.
