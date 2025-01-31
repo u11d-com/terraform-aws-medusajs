@@ -176,7 +176,6 @@ After successful deployment, Terraform will display output values. These include
 - Verify AWS credentials: Ensure your AWS CLI is configured correctly and has the required permissions.
 - Verify VPC settings: Ensure that the VPC and subnets configuration is proper.
 - Verify External registry credentials: Ensure that external registry credentials are correct and user has proper permissions to access images.
-- Consult module documentation: For specific issues related to the `u11d-com/terraform-aws-medusajs` module, refer to its documentation.
 - Seek community support: If you encounter issues you can not solve on your own, consider seeking help from the Terraform community or in the module's repository's issue tracker.
 - :email: [Contact us](mailto:hello@u11d.com) to for support or development.
 

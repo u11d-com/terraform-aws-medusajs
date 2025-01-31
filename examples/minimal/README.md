@@ -120,7 +120,6 @@ After successful deployment, Terraform will display output values. These include
 ## Troubleshooting
 - Check Terraform logs: If deployment fails, carefully inspect the logs output by Terraform.
 - Verify AWS credentials: Ensure your AWS CLI is configured correctly and has the required permissions.
-- Consult module documentation: For specific issues related to the `u11d-com/terraform-aws-medusajs` module, refer to its documentation.
 - Seek community support: If you encounter issues you can not solve on your own, consider seeking help from the Terraform community or in the module's repository's issue tracker.
 - :email: [Contact us](mailto:hello@u11d.com) for support or development.
 
