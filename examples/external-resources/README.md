@@ -126,7 +126,7 @@ After successful deployment, Terraform will display output values. These include
 - Change the AWS `region`: Modify the region value within the provider "aws" block.
 - Customize the module parameters: Explore the documentation for the `u11d-com/terraform-aws-medusajs` module to understand all possible customization options. You can find the documentation in the module's repository or in the Terraform Registry.
 - **Use existing VPC:** Make sure that `vpc_create` is set to `false` and provide correct `vpc_id`, `public_subnet_ids`, and `private_subnet_ids` values.
-- **Use external container registries:** Provide valid container image URLs, `backend_container_image` and `storefront_container_image` , and credentials if needed,  `backend_container_registry_credentials` and `storefront_container_registry_credentials`.
+- **Use external container registries:** Provide valid container image URLs (`backend_container_image` and `storefront_container_image`) and credentials if needed (`backend_container_registry_credentials` and `storefront_container_registry_credentials`).
 - Configure additional environment variables: Add more environment variables to `backend_extra_environment_variables` to configure your MedusaJS application.
 
 ## Troubleshooting
