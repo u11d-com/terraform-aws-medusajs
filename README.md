@@ -67,7 +67,7 @@ module "medusajs" {
 ```
 
 This example demonstrates how to use the root module to deploy MedusaJS with the most basic configuration. In the example:
-  - project and environment variables are set to `my-project` and `example` respectively.
+  - project and environment variables are set to `my-project` and `example` respectively and will be used to fill resource tags
   - ECR repository will be created for storefront, as `ecr_storefront_create` is set to `true`.
   - MedusaJS backend will be deployed using publicly available container image `ghcr.io/u11d-com/medusa-backend:1.20.10-latest` from GitHub container registry.
   - Database will be seeded after deployment by running seeding command, as `backend_seed_create` and `backend_seed_run` are set to `true`.
@@ -114,10 +114,10 @@ In this example, all resource creation is disabled and root module will deploy n
 - [External resources](/examples/external-resources) - Example using an existing VPC and external image repositories.
 
 ## Inputs
-Detailed information about each input variable can be found in the module's documentation, or in the variables.tf file in the root directory.
+Detailed information about each input variable can be found in the module's documentation, or in the [variables.tf](/variables.tf) file in the root directory.
 
 ## Outputs
-The module exposes a variety of outputs that allow users to access the deployed resources. These outputs are detailed in the outputs.tf file in the root directory.
+The module exposes a variety of outputs that allow users to access the deployed resources. These outputs are detailed in the [outputs.tf](/outputs.tf) file in the root directory.
 
 ## Troubleshooting
   - Check Terraform logs: If deployment fails, carefully inspect the logs output by Terraform.
