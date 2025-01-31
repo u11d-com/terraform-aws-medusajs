@@ -57,7 +57,7 @@ Before you begin, make sure you have the following:
 
 <details>
 
-<summary>2. Review the [main.tf](/main.tf) file (click to expand)</summary>
+<summary>2. Review the <code>main.tf</code> file (click to expand)</summary>
 
 This file contains the Terraform configuration for deploying the MedusaJS infrastructure.
 - terraform block: Specifies the required Terraform version.
