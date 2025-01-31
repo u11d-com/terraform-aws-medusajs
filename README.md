@@ -245,10 +245,10 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 
 | Name | Description |
 |------|-------------|
-| <a name="output_backend_url"></a> [backend\_url](#output\_backend\_url) | n/a |
-| <a name="output_ecr_backend_url"></a> [ecr\_backend\_url](#output\_ecr\_backend\_url) | n/a |
-| <a name="output_ecr_storefront_url"></a> [ecr\_storefront\_url](#output\_ecr\_storefront\_url) | n/a |
-| <a name="output_storefront_url"></a> [storefront\_url](#output\_storefront\_url) | n/a |
+| <a name="output_backend_url"></a> [backend\_url](#output\_backend\_url) | The URL of the backend service, either from the created module or provided externally. |
+| <a name="output_ecr_backend_url"></a> [ecr\_backend\_url](#output\_ecr\_backend\_url) | The URL of the ECR repository for the backend service, if created. |
+| <a name="output_ecr_storefront_url"></a> [ecr\_storefront\_url](#output\_ecr\_storefront\_url) | The URL of the ECR repository for the storefront service, if created. |
+| <a name="output_storefront_url"></a> [storefront\_url](#output\_storefront\_url) | The URL of the storefront service, if created. |
 <!-- END_TF_DOCS -->
 
 ---
