@@ -143,7 +143,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.10.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
 | <a name="requirement_archive"></a> [archive](#requirement\_archive) | ~> 2.7.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.84.0 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
