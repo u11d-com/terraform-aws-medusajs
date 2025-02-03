@@ -19,7 +19,7 @@ provider "aws" {
 }
 
 module "external_resources" {
-  source = "u11d-com/terraform-aws-medusajs"
+  source = "u11d-com/medusajs/aws"
 
   # Global
   project     = local.project
