@@ -10,7 +10,6 @@ locals {
       S3_BUCKET : aws_s3_bucket.medusa_uploads.id
       S3_REGION : aws_s3_bucket.medusa_uploads.region
       S3_ACCESS_KEY_ID : aws_iam_access_key.medusa_s3.id
-      S3_SECRET_ACCESS_KEY : aws_iam_access_key.medusa_s3.secret
     },
     var.redis_url != null ? { REDIS_URL : var.redis_url } : {},
     var.store_cors != null ? { STORE_CORS : var.store_cors } : {},
@@ -29,6 +28,10 @@ locals {
       COOKIE_SECRET : {
         arn = aws_secretsmanager_secret.cookie_secret.arn
         key = "::${aws_secretsmanager_secret_version.cookie_secret.version_id}"
+      }
+      S3_SECRET_ACCESS_KEY : {
+        arn = aws_secretsmanager_secret.s3_user_secret.arn
+        key = "::${aws_secretsmanager_secret_version.s3_user_secret.version_id}"
       }
     },
     local.create_admin_user ? {
