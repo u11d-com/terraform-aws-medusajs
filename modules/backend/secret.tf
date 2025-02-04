@@ -102,6 +102,6 @@ resource "aws_secretsmanager_secret" "s3_user_secret" {
 }
 
 resource "aws_secretsmanager_secret_version" "s3_user_secret" {
-  secret_id     = aws_secretsmanager_secret.cookie_secret.id
+  secret_id     = aws_secretsmanager_secret.s3_user_secret.id
   secret_string = aws_iam_access_key.medusa_s3.secret
 }
