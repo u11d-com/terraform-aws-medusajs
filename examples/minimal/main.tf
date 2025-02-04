@@ -15,7 +15,6 @@ provider "aws" {
       Project     = local.project
       Environment = local.environment
       Owner       = local.owner
-      Terraform   = true
       ManagedBy   = "terraform"
       CreatedAt   = timestamp()
     }

@@ -1,11 +1,11 @@
-resource "aws_s3_bucket" "medusa_uploads" {
+resource "aws_s3_bucket" "uploads" {
   bucket = "${var.context.project}-uploads-${var.context.environment}"
 
   tags = local.tags
 }
 
-resource "aws_s3_bucket_public_access_block" "medusa_uploads" {
-  bucket = aws_s3_bucket.medusa_uploads.id
+resource "aws_s3_bucket_public_access_block" "uploads" {
+  bucket = aws_s3_bucket.uploads.id
 
   block_public_acls       = false
   block_public_policy     = false
@@ -22,17 +22,17 @@ data "aws_iam_policy_document" "allow_public_read" {
       identifiers = ["*"]
     }
     actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.medusa_uploads.arn}/*"]
+    resources = ["${aws_s3_bucket.uploads.arn}/*"]
   }
 }
 
 resource "aws_s3_bucket_policy" "allow_public_read" {
-  bucket = aws_s3_bucket.medusa_uploads.id
+  bucket = aws_s3_bucket.uploads.id
   policy = data.aws_iam_policy_document.allow_public_read.json
 }
 
-resource "aws_s3_bucket_cors_configuration" "medusa_uploads" {
-  bucket = aws_s3_bucket.medusa_uploads.id
+resource "aws_s3_bucket_cors_configuration" "uploads" {
+  bucket = aws_s3_bucket.uploads.id
 
   cors_rule {
     allowed_headers = ["*"]

@@ -5,6 +5,7 @@ terraform {
 locals {
   project     = "medusa-demo"
   environment = "prod"
+  owner       = "my-team"
 }
 
 provider "aws" {
@@ -13,7 +14,9 @@ provider "aws" {
     tags = {
       Project     = local.project
       Environment = local.environment
-      Terraform   = true
+      Owner       = local.owner
+      ManagedBy   = "terraform"
+      CreatedAt   = timestamp()
     }
   }
 }
