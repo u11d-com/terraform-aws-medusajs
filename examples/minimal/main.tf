@@ -5,6 +5,7 @@ terraform {
 locals {
   project     = "medusa-demo"
   environment = "prod"
+  owner       = "my-team"
 }
 
 provider "aws" {
@@ -13,13 +14,15 @@ provider "aws" {
     tags = {
       Project     = local.project
       Environment = local.environment
-      Terraform   = true
+      Owner       = local.owner
+      ManagedBy   = "terraform"
+      CreatedAt   = timestamp()
     }
   }
 }
 
 module "minimal" {
-  source = "u11d-com/terraform-aws-medusajs"
+  source = "u11d-com/medusajs/aws"
 
   project     = local.project
   environment = local.environment
@@ -27,8 +30,8 @@ module "minimal" {
   ecr_storefront_create = true
 
   backend_container_image = "ghcr.io/u11d-com/medusa-backend:1.20.10-latest"
-  backend_seed_create = true
-  backend_seed_run    = true
+  backend_seed_create     = true
+  backend_seed_run        = true
   backend_extra_environment_variables = {
     "NODE_ENV" : "development"
   }

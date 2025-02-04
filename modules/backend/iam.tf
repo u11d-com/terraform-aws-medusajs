@@ -111,13 +111,6 @@ data "aws_iam_policy_document" "ecs_task_policy" {
   }
 }
 
-resource "aws_iam_role" "ecs_task" {
-  name               = "${local.prefix}-ecs-task-role"
-  assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role.json
-
-  tags = local.tags
-}
-
 resource "aws_iam_policy" "ecs_task" {
   name   = "${local.prefix}-ecs-task-policy"
   policy = data.aws_iam_policy_document.ecs_task_policy.json
@@ -128,6 +121,52 @@ resource "aws_iam_policy" "ecs_task" {
 resource "aws_iam_role_policy_attachment" "ecs_task" {
   role       = aws_iam_role.ecs_task.name
   policy_arn = aws_iam_policy.ecs_task.arn
+}
+
+data "aws_iam_policy_document" "s3_access" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:*",
+      "s3-object-lambda:*"
+    ]
+    resources = [
+      aws_s3_bucket.uploads.arn,
+      "${aws_s3_bucket.uploads.arn}/*"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "s3_access" {
+  name   = "${local.prefix}-s3-access"
+  policy = data.aws_iam_policy_document.s3_access.json
+  tags   = local.tags
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_s3_access" {
+  role       = aws_iam_role.ecs_task.name
+  policy_arn = aws_iam_policy.s3_access.arn
+}
+
+resource "aws_iam_role" "ecs_task" {
+  name               = "${local.prefix}-ecs-task-role"
+  assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role.json
+
+  tags = local.tags
+}
+
+resource "aws_iam_user_policy_attachment" "s3_access" {
+  user       = aws_iam_user.medusa_s3.name
+  policy_arn = aws_iam_policy.s3_access.arn
+}
+
+resource "aws_iam_user" "medusa_s3" {
+  name = "${local.prefix}-s3-user"
+  tags = local.tags
+}
+
+resource "aws_iam_access_key" "medusa_s3" {
+  user = aws_iam_user.medusa_s3.name
 }
 
 data "aws_iam_policy_document" "lambda_seed_assume_role" {
@@ -201,3 +240,4 @@ resource "aws_iam_role_policy_attachment" "lambda_seed" {
   role       = aws_iam_role.lambda_seed[0].name
   policy_arn = aws_iam_policy.lambda_seed[0].arn
 }
+

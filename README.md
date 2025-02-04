@@ -45,7 +45,7 @@ To use this module, include it in your Terraform configuration file, specifying 
 
 ```hcl
 module "medusajs" {
-  source = "u11d-com/terraform-aws-medusajs"
+  source = "u11d-com/medusajs/aws"
 
   ## Required global variables (no defaults)
   project     = "my-project"
@@ -79,7 +79,7 @@ The module allows for conditional creation of resources, providing a way to mana
 
 ```hcl
 module "medusajs" {
-  source = "u11d-com/terraform-aws-medusajs"
+  source = "u11d-com/medusajs/aws"
 
   ## Required global variables (no defaults)
   project     = "my-project"
