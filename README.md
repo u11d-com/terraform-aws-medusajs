@@ -1,40 +1,27 @@
-# Terraform Module for MedusaJS on AWS
+# Terraform Module for Medusa on AWS
 
-This Terraform module provides a flexible and scalable solution for deploying the [MedusaJS](https://medusajs.com/) e-commerce platform on Amazon Web Services (AWS). It allows users to create and manage all necessary infrastructure components, from basic deployments to more complex, customized configurations.
+This Terraform module provides a flexible and scalable solution for deploying the [Medusa](https://medusajs.com/) e-commerce platform on Amazon Web Services (AWS). It allows users to create and manage all necessary infrastructure components, from basic deployments to more complex, customized configurations.
 
-This module provides a complete set of composable sub-modules for each component of MedusaJS Infrastructure. These sub-modules can be used independently to deploy certain parts of infrastructure, but are combined inside the root module to deploy everything at once.
-
-## Table of Contents
-
-- [Features](#features)
-- [Module Structure](#module-structure)
-- [Usage](#usage)
-  - [Basic Usage](#basic-usage)
-  - [Conditional Resource Creation](#conditional-resource-creation)
-- [Examples](#examples)
-- [Inputs](#inputs)
-- [Outputs](#outputs)
-- [Contributing](#contributing)
-- [License](#license)
+This module provides a complete set of composable sub-modules for each component of Medusa Infrastructure. These sub-modules can be used independently to deploy certain parts of infrastructure, but are combined inside the root module to deploy everything at once.
 
 ## Features
 
 - **Modular Design:** The module is composed of sub-modules for each part of the infrastructure, providing a highly flexible and composable solution.
-- **Comprehensive Resource Management:** Supports creation and management of essential MedusaJS infrastructure including VPC, subnets, ECR repositories, ElastiCache Redis, RDS PostgreSQL, backend, and storefront applications.
+- **Comprehensive Resource Management:** Supports creation and management of essential Medusa infrastructure including VPC, subnets, ECR repositories, ElastiCache Redis, RDS PostgreSQL, backend, and storefront applications.
 - **Customizable Configurations:** Allows for extensive customization of each component through a wide range of input variables.
 - **Flexibility:** Supports both creating new infrastructure and integrating with existing AWS resources.
 - **Ease of Use:** Provides sane defaults and clear examples for quick setup and deployment.
-- **Scalable:** Designed to support both small and large-scale deployments of MedusaJS.
+- **Scalable:** Designed to support both small and large-scale deployments of Medusa.
 
 ## Module Structure
 
 This module is composed of the following sub-modules, each responsible for deploying specific resources. These sub-modules are also available as stand-alone modules and can be found in the `modules` directory.
 
--   [`backend`](/modules/backend): Creates resources for the MedusaJS backend application.
+-   [`backend`](/modules/backend): Creates resources for the Medusa backend application.
 -   [`ecr`](/modules/ecr): Creates Elastic Container Registry (ECR) repositories for storing Docker images.
--   [`elasticache`](/modules/elasticache): Creates an ElastiCache Redis instance for MedusaJS backend (communication/cache).
+-   [`elasticache`](/modules/elasticache): Creates an ElastiCache Redis instance for Medusa backend (communication/cache).
 -   [`rds`](/modules/rds): Creates an RDS PostgreSQL database instance for data persistence.
--   [`storefront`](/modules/storefront): Creates resources for the MedusaJS storefront application.
+-   [`storefront`](/modules/storefront): Creates resources for the Medusa storefront application.
 -   [`vpc`](/modules/vpc): Creates a Virtual Private Cloud (VPC) with necessary networking components.
 
 ## Usage
@@ -53,7 +40,7 @@ module "medusajs" {
 
   ecr_storefront_create = true
 
-  // Using example image build for MedusaJS starter
+  // Using example image build for Medusa starter
   backend_container_image = "ghcr.io/u11d-com/medusa-backend:1.20.10-latest"
   backend_seed_create = true
   backend_seed_run    = true
@@ -66,10 +53,10 @@ module "medusajs" {
 }
 ```
 
-This example demonstrates how to use the root module to deploy MedusaJS with the most basic configuration. In the example:
+This example demonstrates how to use the root module to deploy Medusa with the most basic configuration. In the example:
   - project and environment variables are set to `my-project` and `example` respectively and will be used to fill resource tags.
   - ECR repository will be created for storefront, as `ecr_storefront_create` is set to `true`.
-  - MedusaJS backend will be deployed using publicly available container image `ghcr.io/u11d-com/medusa-backend:1.20.10-latest` from GitHub container registry.
+  - Medusa backend will be deployed using publicly available container image `ghcr.io/u11d-com/medusa-backend:1.20.10-latest` from GitHub container registry.
   - Database will be seeded after deployment by running seeding command, as `backend_seed_create` and `backend_seed_run` are set to `true`.
   - Example environment variable `NODE_ENV` is set to `development` value using `backend_extra_environment_variables` variable.
   - Storefront deployment is disabled, but can be enabled by setting `storefront_create` to `true` and passing proper image url using `storefront_container_image` variable.
@@ -88,19 +75,19 @@ module "medusajs" {
   ## Conditional creation variables
   # Disable creation of ECR for backend in case you have external repository
   ecr_backend_create    = false
-  # Disable creation of ECR for fronend in case you have external repository
+  # Disable creation of ECR for frontend in case you have external repository
   ecr_storefront_create = false
   # Disable creation of VPC for resources in case there is existing one
   vpc_create           = false
-  # Disable creation of Redis instance for MedusaJS backend
+  # Disable creation of Redis instance for Medusa backend
   elasticache_create   = false
-  # Disable creation of Postgresql RDS instance for MedusaJS backend
+  # Disable creation of Postgresql RDS instance for Medusa backend
   rds_create          = false
-  # Disable creation of MedusaJS backend resources
+  # Disable creation of Medusa backend resources
   backend_create      = false
-  # Disable seed step for MedusaJS backend
+  # Disable seed step for Medusa backend
   backend_seed_create = false
-  # Disable creation of MedusaJS frontend resources
+  # Disable creation of Medusa frontend resources
   storefront_create   = false
 }
 ```
@@ -128,7 +115,7 @@ The module exposes a variety of outputs that allow users to access the deployed 
 
 If you have any questions, comments, or need assistance with this module, please feel free to reach out to us via email at [hello@u11d.com](mailto:hello@u11d.com). We are happy to help with any questions related to module usage or to resolve issues.
 
-Additionally, if you require commercial development services for your MedusaJS platform, we offer expertise in building custom solutions, integrations, and more. Please contact us at the same email address to discuss your project needs.
+Additionally, if you require commercial development services for your Medusa platform, we offer expertise in building custom solutions, integrations, and more. Please contact us at the same email address to discuss your project needs.
 
 ## Contributing
 We welcome contributions to this module! If you have bug fixes, new features, or documentation improvements, feel free to fork the repository, make your changes, and submit a pull request.
