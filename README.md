@@ -54,9 +54,10 @@ module "medusajs" {
 ```
 
 This example demonstrates how to use the root module to deploy Medusa with the most basic configuration. In the example:
-  - project and environment variables are set to `my-project` and `example` respectively and will be used to fill resource tags.
+  - Project and environment variables are set to `my-project` and `example` respectively and will be used to fill resource tags.
   - ECR repository will be created for storefront, as `ecr_storefront_create` is set to `true`.
   - Medusa backend will be deployed using publicly available container image `ghcr.io/u11d-com/medusa-backend:1.20.10-latest` from GitHub container registry.
+  - An S3 bucket will be created to store files and media assets, as it is required for handling uploads like product images in the Medusa backend. This ensures proper file management through the S3 file service plugin, enabling seamless asset storage and retrieval.
   - Database will be seeded after deployment by running seeding command, as `backend_seed_create` and `backend_seed_run` are set to `true`.
   - Example environment variable `NODE_ENV` is set to `development` value using `backend_extra_environment_variables` variable.
   - Storefront deployment is disabled, but can be enabled by setting `storefront_create` to `true` and passing proper image url using `storefront_container_image` variable.
@@ -114,8 +115,6 @@ The module exposes a variety of outputs that allow users to access the deployed 
 ## Contact
 
 If you have any questions, comments, or need assistance with this module, please feel free to reach out to us via email at [hello@u11d.com](mailto:hello@u11d.com). We are happy to help with any questions related to module usage or to resolve issues.
-
-Additionally, if you require commercial development services for your Medusa platform, we offer expertise in building custom solutions, integrations, and more. Please contact us at the same email address to discuss your project needs.
 
 ## Contributing
 We welcome contributions to this module! If you have bug fixes, new features, or documentation improvements, feel free to fork the repository, make your changes, and submit a pull request.

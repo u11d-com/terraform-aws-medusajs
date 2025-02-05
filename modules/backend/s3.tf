@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "uploads" {
-  bucket = "${var.context.project}-uploads-${var.context.environment}"
+  bucket_prefix = "${local.prefix}-uploads-"
 
   tags = local.tags
 }
