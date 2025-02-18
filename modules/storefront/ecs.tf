@@ -25,7 +25,7 @@ locals {
       logDriver = "awslogs"
       options = {
         "awslogs-region"        = data.aws_region.current.name,
-        "awslogs-group"         = var.logs.group
+        "awslogs-group"         = "${local.prefix}${var.logs.group}"
         "awslogs-stream-prefix" = var.logs.prefix
       }
     }
@@ -43,20 +43,14 @@ locals {
   }
 }
 
-resource "random_string" "suffix" {
-  length  = 5
-  special = false
-  upper   = false
-}
-
 resource "aws_ecs_cluster" "main" {
-  name = "${local.prefix}-${random_string.suffix.result}"
+  name = local.prefix
 
   tags = local.tags
 }
 
 resource "aws_ecs_task_definition" "main" {
-  family                   = "${local.prefix}-${random_string.suffix.result}"
+  family                   = local.prefix
   execution_role_arn       = aws_iam_role.main.arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -72,7 +66,7 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecs_service" "main" {
-  name            = "${local.prefix}-${random_string.suffix.result}"
+  name            = local.prefix
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.main.arn
   desired_count   = var.resources.instances

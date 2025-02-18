@@ -4,7 +4,7 @@ terraform {
 
 locals {
   project     = "medusa"
-  environment = "ml"
+  environment = "prod"
   owner       = "my-team"
 }
 
@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 module "minimal" {
-  source = "../.."
+  source = "u11d-com/medusajs/aws"
 
   project     = local.project
   environment = local.environment
