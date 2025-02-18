@@ -3,29 +3,21 @@ terraform {
 }
 
 locals {
-  project     = "medusa-demo"
-  environment = "prod"
+  project     = "medusa"
+  environment = "ml"
   owner       = "my-team"
 }
 
 provider "aws" {
   region = "eu-west-1"
-  default_tags {
-    tags = {
-      Project     = local.project
-      Environment = local.environment
-      Owner       = local.owner
-      ManagedBy   = "terraform"
-      CreatedAt   = timestamp()
-    }
-  }
 }
 
 module "minimal" {
-  source = "u11d-com/medusajs/aws"
+  source = "../.."
 
   project     = local.project
   environment = local.environment
+  owner       = local.owner
 
   ecr_storefront_create = true
 
@@ -36,8 +28,7 @@ module "minimal" {
     "NODE_ENV" : "development"
   }
 
-  storefront_create          = false
-  storefront_container_image = "xxx"
+  storefront_create = false
 }
 
 output "ecr_backend_url" {

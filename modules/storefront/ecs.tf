@@ -43,14 +43,20 @@ locals {
   }
 }
 
+resource "random_string" "suffix" {
+  length  = 5
+  special = false
+  upper   = false
+}
+
 resource "aws_ecs_cluster" "main" {
-  name = local.prefix
+  name = "${local.prefix}-${random_string.suffix.result}"
 
   tags = local.tags
 }
 
 resource "aws_ecs_task_definition" "main" {
-  family                   = local.prefix
+  family                   = "${local.prefix}-${random_string.suffix.result}"
   execution_role_arn       = aws_iam_role.main.arn
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
@@ -66,7 +72,7 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecs_service" "main" {
-  name            = local.prefix
+  name            = "${local.prefix}-${random_string.suffix.result}"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.main.arn
   desired_count   = var.resources.instances
@@ -77,7 +83,7 @@ resource "aws_ecs_service" "main" {
   }
   load_balancer {
     container_name   = local.container_name
-    target_group_arn = aws_alb_target_group.main.arn
+    target_group_arn = aws_lb_target_group.main.arn
     container_port   = var.container_port
   }
 

@@ -1,10 +1,10 @@
 locals {
-  alb_sg_name = "${local.prefix}-alb-"
+  lb_sg_name  = "${local.prefix}-lb-"
   ecs_sg_name = "${local.prefix}-ecs-"
 }
 
-resource "aws_security_group" "alb" {
-  name_prefix = local.alb_sg_name
+resource "aws_security_group" "lb" {
+  name_prefix = local.lb_sg_name
   description = "Allow inbound traffic from outside on ${var.container_port} port."
 
   vpc_id = var.vpc.id
@@ -16,19 +16,19 @@ resource "aws_security_group" "alb" {
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "alb" {
-  security_group_id = aws_security_group.alb.id
+resource "aws_vpc_security_group_ingress_rule" "lb" {
+  security_group_id = aws_security_group.lb.id
 
   cidr_ipv4   = "0.0.0.0/0"
-  from_port   = aws_alb_listener.main.port
-  to_port     = aws_alb_listener.main.port
+  from_port   = aws_lb_listener.main.port
+  to_port     = aws_lb_listener.main.port
   ip_protocol = "tcp"
 
   tags = local.tags
 }
 
-resource "aws_vpc_security_group_egress_rule" "alb" {
-  security_group_id = aws_security_group.alb.id
+resource "aws_vpc_security_group_egress_rule" "lb" {
+  security_group_id = aws_security_group.lb.id
 
   referenced_security_group_id = aws_security_group.ecs.id
   ip_protocol                  = "-1"
@@ -38,7 +38,7 @@ resource "aws_vpc_security_group_egress_rule" "alb" {
 
 resource "aws_security_group" "ecs" {
   name_prefix = local.ecs_sg_name
-  description = "Allow inbound traffic from ALB on ${var.container_port} port."
+  description = "Allow inbound traffic from lb on ${var.container_port} port."
 
   vpc_id = var.vpc.id
 
@@ -52,7 +52,7 @@ resource "aws_security_group" "ecs" {
 resource "aws_vpc_security_group_ingress_rule" "ecs" {
   security_group_id = aws_security_group.ecs.id
 
-  referenced_security_group_id = aws_security_group.alb.id
+  referenced_security_group_id = aws_security_group.lb.id
   from_port                    = var.container_port
   to_port                      = var.container_port
   ip_protocol                  = "tcp"

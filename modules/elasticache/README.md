@@ -3,15 +3,15 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.10.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.84.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.87.0 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.84.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.87.0 |
 
 ## Modules
 
@@ -34,7 +34,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_context"></a> [context](#input\_context) | Project context containing project name and environment | <pre>object({<br/>    project     = string<br/>    environment = string<br/>  })</pre> | n/a | yes |
+| <a name="input_context"></a> [context](#input\_context) | Project context containing project name and environment | <pre>object({<br/>    project     = string<br/>    environment = string<br/>    Owner       = string<br/>    ManagedBy   = string<br/>  })</pre> | n/a | yes |
 | <a name="input_node_type"></a> [node\_type](#input\_node\_type) | The Elasticache instance class used. | `string` | n/a | yes |
 | <a name="input_nodes_num"></a> [nodes\_num](#input\_nodes\_num) | The initial number of cache nodes that the cache cluster will have. | `number` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | Port exposed by the redis to redirect traffic to. | `number` | n/a | yes |

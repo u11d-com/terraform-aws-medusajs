@@ -8,7 +8,7 @@ data "aws_secretsmanager_secret_version" "main" {
 }
 
 resource "aws_db_subnet_group" "main" {
-  name        = "${local.prefix}-subnet-group"
+  name_prefix = "${local.prefix}-subnet-group-"
   description = "DB subnet group used by${local.prefix}."
 
   subnet_ids = var.vpc.private_subnet_ids

@@ -1,11 +1,11 @@
-resource "aws_alb" "main" {
+resource "aws_lb" "main" {
   subnets         = var.vpc.private_subnet_ids
-  security_groups = [aws_security_group.alb.id]
-  name            = "${local.prefix}-alb"
+  security_groups = [aws_security_group.lb.id]
+  name            = "${local.prefix}-lb"
   tags            = local.tags
 }
 
-resource "aws_alb_target_group" "main" {
+resource "aws_lb_target_group" "main" {
   port        = var.container_port
   protocol    = "HTTP"
   vpc_id      = var.vpc.id
@@ -25,18 +25,18 @@ resource "aws_alb_target_group" "main" {
   tags = local.tags
 }
 
-resource "aws_alb_listener" "main" {
-  load_balancer_arn = aws_alb.main.arn
+resource "aws_lb_listener" "main" {
+  load_balancer_arn = aws_lb.main.arn
   port              = 80
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = aws_alb_target_group.main.arn
+    target_group_arn = aws_lb_target_group.main.arn
     type             = "forward"
   }
 
   lifecycle {
-    replace_triggered_by = [aws_alb_target_group.main]
+    replace_triggered_by = [aws_lb_target_group.main]
   }
 
   tags = local.tags

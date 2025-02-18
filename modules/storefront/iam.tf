@@ -71,15 +71,15 @@ data "aws_iam_policy_document" "ecs_task_policy" {
 }
 
 resource "aws_iam_role" "main" {
-  name               = "${local.prefix}-ecs-task-role"
+  name_prefix        = "${local.prefix}-ecs-task"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role.json
 
   tags = local.tags
 }
 
 resource "aws_iam_policy" "main" {
-  name   = "${local.prefix}-ecs-task-policy"
-  policy = data.aws_iam_policy_document.ecs_task_policy.json
+  name_prefix = "${local.prefix}-ecs-task"
+  policy      = data.aws_iam_policy_document.ecs_task_policy.json
 
   tags = local.tags
 }

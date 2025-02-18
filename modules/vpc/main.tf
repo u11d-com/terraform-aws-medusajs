@@ -4,9 +4,12 @@ locals {
   prefix         = "${var.context.project}-${var.context.environment}-vpc"
   public_prefix  = "${local.prefix}-public"
   private_prefix = "${local.prefix}-private"
-  tags = {
-    Component = "VPC"
-  }
+  tags = merge(
+    var.context,
+    {
+      Component = "VPC"
+    }
+  )
 }
 
 resource "aws_vpc" "main" {

@@ -1,11 +1,11 @@
 locals {
-  origin_id = "backend-alb"
+  origin_id = "${local.prefix}-backend-lb"
 }
 
 resource "aws_cloudfront_vpc_origin" "main" {
   vpc_origin_endpoint_config {
     name                   = local.origin_id
-    arn                    = aws_alb.main.arn
+    arn                    = aws_lb.main.arn
     http_port              = 80
     https_port             = 443
     origin_protocol_policy = "http-only"
@@ -39,7 +39,7 @@ resource "aws_cloudfront_distribution" "main" {
   comment = title(local.prefix)
 
   origin {
-    domain_name = aws_alb.main.dns_name
+    domain_name = aws_lb.main.dns_name
     origin_id   = local.origin_id
 
     vpc_origin_config {

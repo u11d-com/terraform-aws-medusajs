@@ -2,6 +2,8 @@ variable "context" {
   type = object({
     project     = string
     environment = string
+    Owner       = string
+    ManagedBy   = string
   })
   description = "Project context containing project name and environment"
 }

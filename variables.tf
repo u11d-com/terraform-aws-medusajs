@@ -3,10 +3,30 @@
 variable "project" {
   description = "The name of the project for which infrastructure is being provisioned."
   type        = string
+
+  validation {
+    condition     = can(regex("^[a-z0-9-]+$", var.project))
+    error_message = "Project name must contain only lowercase letters, numbers, and hyphens."
+  }
 }
 
 variable "environment" {
   description = "The name of the environment for which infrastructure is being provisioned."
+  type        = string
+
+  validation {
+    condition     = can(regex("^[a-z0-9-]+$", var.environment))
+    error_message = "Environment name must contain only lowercase letters, numbers, and hyphens."
+  }
+
+  validation {
+    condition     = length(format("%s-%s", var.project, var.environment)) <= 10
+    error_message = "The combined length of project and environment names (including hyphen) must not exceed 10 characters."
+  }
+}
+
+variable "owner" {
+  description = "The owner of the infrastructure resources."
   type        = string
 }
 
@@ -275,6 +295,7 @@ variable "backend_container_registry_credentials" {
 variable "backend_container_image" {
   description = "Image tag of the docker image to run in the ECS cluster."
   type        = string
+  default     = "ghcr.io/u11d-com/medusa-backend:1.20.10-latest"
 }
 
 variable "backend_resources" {
@@ -356,9 +377,9 @@ variable "backend_seed_command" {
 }
 
 variable "backend_seed_timeout" {
-  description = "Timeout for the seed command."
+  description = "Timeout for the seed command (seconds)."
   type        = number
-  default     = 60
+  default     = 120
 }
 
 variable "backend_seed_fail_on_error" {
@@ -494,6 +515,7 @@ variable "storefront_container_registry_credentials" {
 variable "storefront_container_image" {
   description = "Image tag of the docker image to run in the ECS cluster."
   type        = string
+  default     = null
 }
 
 variable "storefront_resources" {

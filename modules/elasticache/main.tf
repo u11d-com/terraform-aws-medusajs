@@ -1,6 +1,9 @@
 locals {
   prefix = "${var.context.project}-${var.context.environment}-elasticache"
-  tags = {
-    Component = "Elasticache"
-  }
+  tags = merge(
+    var.context,
+    {
+      Component = "Elasticache"
+    }
+  )
 }

@@ -11,7 +11,7 @@ locals {
       S3_REGION : aws_s3_bucket.uploads.region
       S3_ACCESS_KEY_ID : aws_iam_access_key.medusa_s3.id
     },
-    var.redis_url != null ? { REDIS_URL : var.redis_url, CACHE_REDIS_URL : var.redis_url, EVENTS_REDIS_URL :  var.redis_url} : {},
+    var.redis_url != null ? { REDIS_URL : var.redis_url, CACHE_REDIS_URL : var.redis_url, EVENTS_REDIS_URL : var.redis_url } : {},
     var.store_cors != null ? { STORE_CORS : var.store_cors } : {},
     var.admin_cors != null ? { ADMIN_CORS : var.admin_cors } : {},
     var.run_migrations != null ? { MEDUSA_RUN_MIGRATION : tostring(var.run_migrations) } : {},
@@ -63,7 +63,7 @@ locals {
       logDriver = "awslogs"
       options = {
         "awslogs-region"        = data.aws_region.current.name,
-        "awslogs-group"         = var.logs.group
+        "awslogs-group"         = "${local.prefix}${var.logs.group}"
         "awslogs-stream-prefix" = var.logs.prefix
       }
     }
@@ -118,7 +118,7 @@ resource "aws_ecs_service" "main" {
   }
   load_balancer {
     container_name   = local.container_name
-    target_group_arn = aws_alb_target_group.main.arn
+    target_group_arn = aws_lb_target_group.main.arn
     container_port   = var.container_port
   }
 
