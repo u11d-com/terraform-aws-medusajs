@@ -51,9 +51,9 @@ Before you begin, make sure you have the following:
 
 ### Configuration
 
-1. Clone this repository: [terraform-aws-medusajs](https://registry.terraform.io/modules/u11d-com/medusajs/aws/latest)
+1. Clone this repository: [terraform-aws-medusajs](https://github.com/u11d-com/terraform-aws-medusajs)
     ```bash
-    git clone https://registry.terraform.io/modules/u11d-com/medusajs/aws/latest.git
+    git clone https://github.com/u11d-com/terraform-aws-medusajs.git
     cd terraform-aws-medusajs/examples/minimal
     ```
 

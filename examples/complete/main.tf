@@ -3,7 +3,7 @@ terraform {
 }
 
 locals {
-  project     = "medusa-demo"
+  project     = "medusa"
   environment = "prod"
   owner       = "my-team"
 }
