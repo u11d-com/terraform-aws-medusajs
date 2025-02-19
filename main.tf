@@ -12,6 +12,8 @@ locals {
   context = {
     project     = var.project
     environment = var.environment
+    Owner       = var.owner
+    ManagedBy   = "terraform"
   }
   vpc = {
     id                 = var.vpc_create ? module.vpc[0].id : var.vpc_id

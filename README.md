@@ -37,6 +37,7 @@ module "medusajs" {
   ## Required global variables (no defaults)
   project     = "my-project"
   environment = "example"
+  owner       = "my-team"
 
   ecr_storefront_create = true
 
@@ -49,7 +50,6 @@ module "medusajs" {
   }
 
   storefront_create          = false // Enable once image is built and pushed
-  storefront_container_image = "xxx" // Full name of the image, including registry and tag
 }
 ```
 
@@ -130,7 +130,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
 | <a name="requirement_archive"></a> [archive](#requirement\_archive) | ~> 2.7.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.84.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.87.0 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6.3 |
 
@@ -168,7 +168,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 | <a name="input_backend_admin_cors"></a> [backend\_admin\_cors](#input\_backend\_admin\_cors) | CORS configuration for the admin panel. If not provided, CORS will not be configured. | `string` | `null` | no |
 | <a name="input_backend_admin_credentials"></a> [backend\_admin\_credentials](#input\_backend\_admin\_credentials) | Admin user credentials. If provided, it will be used to create an admin user. | <pre>object({<br/>    email             = string<br/>    password          = optional(string)<br/>    generate_password = optional(bool, true)<br/>  })</pre> | `null` | no |
 | <a name="input_backend_cloudfront_price_class"></a> [backend\_cloudfront\_price\_class](#input\_backend\_cloudfront\_price\_class) | The price class for the backend CloudFront distribution | `string` | `"PriceClass_100"` | no |
-| <a name="input_backend_container_image"></a> [backend\_container\_image](#input\_backend\_container\_image) | Image tag of the docker image to run in the ECS cluster. | `string` | n/a | yes |
+| <a name="input_backend_container_image"></a> [backend\_container\_image](#input\_backend\_container\_image) | Image tag of the docker image to run in the ECS cluster. | `string` | `"ghcr.io/u11d-com/medusa-backend:1.20.10-latest"` | no |
 | <a name="input_backend_container_port"></a> [backend\_container\_port](#input\_backend\_container\_port) | Port exposed by the task container to redirect traffic to. | `number` | `9000` | no |
 | <a name="input_backend_container_registry_credentials"></a> [backend\_container\_registry\_credentials](#input\_backend\_container\_registry\_credentials) | Credentials for private container registry authentication. Cannot be used together with backend\_ecr\_arn. | <pre>object({<br/>    username = string<br/>    password = string<br/>  })</pre> | `null` | no |
 | <a name="input_backend_cookie_secret"></a> [backend\_cookie\_secret](#input\_backend\_cookie\_secret) | Secret used for cookie signing. If not provided, a random secret will be generated. | `string` | `null` | no |
@@ -186,7 +186,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 | <a name="input_backend_seed_create"></a> [backend\_seed\_create](#input\_backend\_seed\_create) | Enable backend seed function creation | `bool` | `false` | no |
 | <a name="input_backend_seed_fail_on_error"></a> [backend\_seed\_fail\_on\_error](#input\_backend\_seed\_fail\_on\_error) | Whether to fail the deployment if the seed command fails. | `bool` | `true` | no |
 | <a name="input_backend_seed_run"></a> [backend\_seed\_run](#input\_backend\_seed\_run) | Specify backend seed should be run after deployment. | `bool` | `false` | no |
-| <a name="input_backend_seed_timeout"></a> [backend\_seed\_timeout](#input\_backend\_seed\_timeout) | Timeout for the seed command. | `number` | `60` | no |
+| <a name="input_backend_seed_timeout"></a> [backend\_seed\_timeout](#input\_backend\_seed\_timeout) | Timeout for the seed command (seconds). | `number` | `120` | no |
 | <a name="input_backend_store_cors"></a> [backend\_store\_cors](#input\_backend\_store\_cors) | CORS configuration for the store. If not provided, CORS will not be configured. | `string` | `null` | no |
 | <a name="input_backend_target_group_health_check_config"></a> [backend\_target\_group\_health\_check\_config](#input\_backend\_target\_group\_health\_check\_config) | Health check configuration for load balancer target group pointing on backend containers | <pre>object({<br/>    interval            = number<br/>    matcher             = number<br/>    timeout             = number<br/>    path                = string<br/>    healthy_threshold   = number<br/>    unhealthy_threshold = number<br/>  })</pre> | <pre>{<br/>  "healthy_threshold": 3,<br/>  "interval": 30,<br/>  "matcher": 200,<br/>  "path": "/health",<br/>  "timeout": 3,<br/>  "unhealthy_threshold": 3<br/>}</pre> | no |
 | <a name="input_backend_url"></a> [backend\_url](#input\_backend\_url) | Medusa backend URL. Required if backend\_create is false. | `string` | `null` | no |
@@ -202,6 +202,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 | <a name="input_elasticache_port"></a> [elasticache\_port](#input\_elasticache\_port) | Port exposed by the redis to redirect traffic to. | `number` | `6379` | no |
 | <a name="input_elasticache_redis_engine_version"></a> [elasticache\_redis\_engine\_version](#input\_elasticache\_redis\_engine\_version) | The version of the redis that will be used to create the Elasticache cluster. You can provide a prefix of the version such as 7.1 (for 7.1.4). | `string` | `"7.1"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The name of the environment for which infrastructure is being provisioned. | `string` | n/a | yes |
+| <a name="input_owner"></a> [owner](#input\_owner) | The owner of the infrastructure resources. | `string` | n/a | yes |
 | <a name="input_private_subnet_ids"></a> [private\_subnet\_ids](#input\_private\_subnet\_ids) | List of private subnet IDs. Required if vpc\_create is false. | `list(string)` | `null` | no |
 | <a name="input_project"></a> [project](#input\_project) | The name of the project for which infrastructure is being provisioned. | `string` | n/a | yes |
 | <a name="input_public_subnet_ids"></a> [public\_subnet\_ids](#input\_public\_subnet\_ids) | List of public subnet IDs. Required if vpc\_create is false. | `list(string)` | `null` | no |
@@ -213,7 +214,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 | <a name="input_rds_username"></a> [rds\_username](#input\_rds\_username) | The username used to authenticate with the PostgreSQL database. | `string` | `"medusa"` | no |
 | <a name="input_redis_url"></a> [redis\_url](#input\_redis\_url) | Redis connection URL. Required if elasticache\_create is false. | `string` | `null` | no |
 | <a name="input_storefront_cloudfront_price_class"></a> [storefront\_cloudfront\_price\_class](#input\_storefront\_cloudfront\_price\_class) | The price class for the CloudFront distribution | `string` | `"PriceClass_100"` | no |
-| <a name="input_storefront_container_image"></a> [storefront\_container\_image](#input\_storefront\_container\_image) | Image tag of the docker image to run in the ECS cluster. | `string` | n/a | yes |
+| <a name="input_storefront_container_image"></a> [storefront\_container\_image](#input\_storefront\_container\_image) | Image tag of the docker image to run in the ECS cluster. | `string` | `null` | no |
 | <a name="input_storefront_container_port"></a> [storefront\_container\_port](#input\_storefront\_container\_port) | Port exposed by the task container to redirect traffic to. | `number` | `8000` | no |
 | <a name="input_storefront_container_registry_credentials"></a> [storefront\_container\_registry\_credentials](#input\_storefront\_container\_registry\_credentials) | Credentials for private container registry authentication. Cannot be used together with storefront\_ecr\_arn. | <pre>object({<br/>    username = string<br/>    password = string<br/>  })</pre> | `null` | no |
 | <a name="input_storefront_create"></a> [storefront\_create](#input\_storefront\_create) | Enable storefront resources creation | `bool` | `false` | no |

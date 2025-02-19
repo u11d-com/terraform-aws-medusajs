@@ -3,22 +3,13 @@ terraform {
 }
 
 locals {
-  project     = "medusa-demo"
+  project     = "medusa"
   environment = "prod"
   owner       = "my-team"
 }
 
 provider "aws" {
   region = "eu-west-1"
-  default_tags {
-    tags = {
-      Project     = local.project
-      Environment = local.environment
-      Owner       = local.owner
-      ManagedBy   = "terraform"
-      CreatedAt   = timestamp()
-    }
-  }
 }
 
 module "complete" {
@@ -27,6 +18,7 @@ module "complete" {
   # Global
   project     = local.project
   environment = local.environment
+  owner       = local.owner
 
   # ECR
   ecr_backend_create             = true

@@ -1,6 +1,9 @@
 locals {
   prefix = "${var.context.project}-${var.context.environment}-rds"
-  tags = {
-    Component = "RDS"
-  }
+  tags = merge(
+    var.context,
+    {
+      Component = "RDS"
+    }
+  )
 }

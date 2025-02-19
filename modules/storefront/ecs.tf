@@ -25,7 +25,7 @@ locals {
       logDriver = "awslogs"
       options = {
         "awslogs-region"        = data.aws_region.current.name,
-        "awslogs-group"         = var.logs.group
+        "awslogs-group"         = "${local.prefix}${var.logs.group}"
         "awslogs-stream-prefix" = var.logs.prefix
       }
     }
@@ -77,7 +77,7 @@ resource "aws_ecs_service" "main" {
   }
   load_balancer {
     container_name   = local.container_name
-    target_group_arn = aws_alb_target_group.main.arn
+    target_group_arn = aws_lb_target_group.main.arn
     container_port   = var.container_port
   }
 

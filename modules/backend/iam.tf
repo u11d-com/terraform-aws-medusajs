@@ -69,14 +69,14 @@ data "aws_iam_policy_document" "ecs_execution_policy" {
 }
 
 resource "aws_iam_role" "ecs_execution" {
-  name               = "${local.prefix}-ecs-execution-role"
+  name_prefix               = "${local.prefix}-ecs-execution-"
   assume_role_policy = data.aws_iam_policy_document.ecs_execution_assume_role.json
 
   tags = local.tags
 }
 
 resource "aws_iam_policy" "ecs_execution" {
-  name   = "${local.prefix}-ecs-execution-policy"
+  name_prefix   = "${local.prefix}-ecs-execution-"
   policy = data.aws_iam_policy_document.ecs_execution_policy.json
 
   tags = local.tags
@@ -112,8 +112,8 @@ data "aws_iam_policy_document" "ecs_task_policy" {
 }
 
 resource "aws_iam_policy" "ecs_task" {
-  name   = "${local.prefix}-ecs-task-policy"
-  policy = data.aws_iam_policy_document.ecs_task_policy.json
+  name_prefix = "${local.prefix}-ecs-task-"
+  policy      = data.aws_iam_policy_document.ecs_task_policy.json
 
   tags = local.tags
 }
@@ -138,9 +138,9 @@ data "aws_iam_policy_document" "s3_access" {
 }
 
 resource "aws_iam_policy" "s3_access" {
-  name   = "${local.prefix}-s3-access"
-  policy = data.aws_iam_policy_document.s3_access.json
-  tags   = local.tags
+  name_prefix = "${local.prefix}-s3-access-"
+  policy      = data.aws_iam_policy_document.s3_access.json
+  tags        = local.tags
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_s3_access" {
@@ -149,7 +149,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_s3_access" {
 }
 
 resource "aws_iam_role" "ecs_task" {
-  name               = "${local.prefix}-ecs-task-role"
+  name_prefix        = "${local.prefix}-ecs-task-"
   assume_role_policy = data.aws_iam_policy_document.ecs_task_assume_role.json
 
   tags = local.tags
@@ -219,7 +219,7 @@ data "aws_iam_policy_document" "lambda_seed_policy" {
 resource "aws_iam_role" "lambda_seed" {
   count = var.seed_create ? 1 : 0
 
-  name               = "${local.prefix}-lambda-seed-role"
+  name_prefix        = "${local.prefix}-lambda-seed-"
   assume_role_policy = data.aws_iam_policy_document.lambda_seed_assume_role[0].json
 
   tags = local.tags
@@ -228,8 +228,8 @@ resource "aws_iam_role" "lambda_seed" {
 resource "aws_iam_policy" "lambda_seed" {
   count = var.seed_create ? 1 : 0
 
-  name   = "${local.prefix}-lambda-seed-policy"
-  policy = data.aws_iam_policy_document.lambda_seed_policy[0].json
+  name_prefix = "${local.prefix}-lambda-seed-"
+  policy      = data.aws_iam_policy_document.lambda_seed_policy[0].json
 
   tags = local.tags
 }
