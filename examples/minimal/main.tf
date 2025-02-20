@@ -13,7 +13,7 @@ provider "aws" {
 }
 
 module "minimal" {
-  source = "u11d-com/medusajs/aws"
+  source = "../.."
 
   project     = local.project
   environment = local.environment
@@ -21,11 +21,15 @@ module "minimal" {
 
   ecr_storefront_create = true
 
-  backend_container_image = "ghcr.io/u11d-com/medusa-backend:1.20.10-latest"
+  backend_container_image = "ghcr.io/u11d-com/medusa-backend:2-3e0612e"
   backend_seed_create     = true
   backend_seed_run        = true
+  backend_seed_command    = "yarn seed"
   backend_extra_environment_variables = {
-    "NODE_ENV" : "development"
+    "NODE_ENV" : "production",
+    "MEDUSA_CREATE_ADMIN_USER" : true,
+    "MEDUSA_ADMIN_EMAIL" : "admin@medusa-test.com",
+    "MEDUSA_ADMIN_PASSWORD" : "supersecret",
   }
 
   storefront_create = false
