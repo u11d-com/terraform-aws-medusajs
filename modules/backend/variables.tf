@@ -22,6 +22,11 @@ variable "container_port" {
   type        = number
 }
 
+variable "load_balancer_type" {
+  description = "Type of load balancer to create (application or network)"
+  type        = string
+}
+
 variable "target_group_health_check_config" {
   description = "Health check configuration for load balancer target group pointing on backend containers"
   type = object({

@@ -94,6 +94,7 @@ module "backend" {
   vpc     = local.vpc
 
   container_port                   = var.backend_container_port
+  load_balancer_type               = var.backend_load_balancer_type
   target_group_health_check_config = var.backend_target_group_health_check_config
   cloudfront_price_class           = var.backend_cloudfront_price_class
   expose_admin_only                = var.backend_expose_admin_only
