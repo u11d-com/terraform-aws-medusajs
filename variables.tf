@@ -20,7 +20,7 @@ variable "environment" {
   }
 
   validation {
-    condition     = length(format("%s-%s", var.project, var.environment)) <= 10
+    condition     = length(format("%s%s", var.project, var.environment)) <= 10
     error_message = "The combined length of project and environment names (including hyphen) must not exceed 10 characters."
   }
 }
@@ -435,6 +435,12 @@ variable "backend_extra_secrets" {
     key = string
   }))
   default = {}
+}
+
+variable "backend_load_balancer_type" {
+  description = "Type of load balancer to create (application or network) for backend"
+  type        = string
+  default     = "network"
 }
 
 ## External backend configuration (when backend_create = false)
