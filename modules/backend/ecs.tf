@@ -6,12 +6,13 @@ locals {
       DATABASE_URL : var.database_url
     },
     {
-      S3_URL : aws_s3_bucket.uploads.bucket_regional_domain_name
+      S3_FILE_URL : aws_s3_bucket.uploads.bucket_regional_domain_name
       S3_BUCKET : aws_s3_bucket.uploads.id
       S3_REGION : aws_s3_bucket.uploads.region
       S3_ACCESS_KEY_ID : aws_iam_access_key.medusa_s3.id
+      S3_ENDPOINT : "https://s3.${aws_s3_bucket.uploads.region}.amazonaws.com"
     },
-    var.redis_url != null ? { REDIS_URL : var.redis_url, CACHE_REDIS_URL : var.redis_url, EVENTS_REDIS_URL : var.redis_url } : {},
+    var.redis_url != null ? { REDIS_URL : var.redis_url, CACHE_REDIS_URL : var.redis_url, EVENTS_REDIS_URL : var.redis_url, WE_REDIS_URL : var.redis_url } : {},
     var.store_cors != null ? { STORE_CORS : var.store_cors } : {},
     var.admin_cors != null ? { ADMIN_CORS : var.admin_cors } : {},
     var.run_migrations != null ? { MEDUSA_RUN_MIGRATION : tostring(var.run_migrations) } : {},

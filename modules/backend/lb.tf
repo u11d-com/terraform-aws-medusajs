@@ -1,4 +1,5 @@
 resource "aws_lb" "main" {
+  load_balancer_type = var.load_balancer_type
   subnets            = var.vpc.private_subnet_ids
   security_groups    = [aws_security_group.lb.id]
   name               = "${local.prefix}-lb"
@@ -7,7 +8,7 @@ resource "aws_lb" "main" {
 
 resource "aws_lb_target_group" "main" {
   port        = var.container_port
-  protocol    = "HTTP"
+  protocol    = var.load_balancer_type == "network" ? "TCP" : "HTTP"
   vpc_id      = var.vpc.id
   target_type = "ip"
   name        = "${local.prefix}-tg"
@@ -28,7 +29,7 @@ resource "aws_lb_target_group" "main" {
 resource "aws_lb_listener" "main" {
   load_balancer_arn = aws_lb.main.arn
   port              = 80
-  protocol          = "HTTP"
+  protocol          = var.load_balancer_type == "network" ? "TCP" : "HTTP"
 
   default_action {
     target_group_arn = aws_lb_target_group.main.arn

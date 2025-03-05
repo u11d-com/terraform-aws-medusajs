@@ -21,13 +21,15 @@ module "minimal" {
 
   ecr_storefront_create = true
 
-  backend_container_image = "ghcr.io/u11d-com/medusa-backend:1.20.10-latest"
+  backend_container_image = "ghcr.io/u11d-com/medusa-backend:2.6.0-latest"
   backend_seed_create     = true
   backend_seed_run        = true
-  backend_extra_environment_variables = {
-    "NODE_ENV" : "development"
-  }
 
+  backend_admin_credentials = {
+    email             = "admin@medusa-test.com",
+    password          = "supersecret",
+    generate_password = false,
+  }
   storefront_create = false
 }
 
