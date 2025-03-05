@@ -25,7 +25,7 @@ variable "container_port" {
 variable "load_balancer_type" {
   description = "Type of load balancer to create (application or network)"
   type        = string
-  default     = "network"
+  default     = "application"
 }
 
 variable "target_group_health_check_config" {

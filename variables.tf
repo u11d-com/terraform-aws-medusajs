@@ -373,7 +373,7 @@ variable "backend_seed_run" {
 variable "backend_seed_command" {
   description = "Command to run to seed the database."
   type        = string
-  default     = "npx medusa seed -f ./data/seed.json"
+  default     = "yarn seed"
 }
 
 variable "backend_seed_timeout" {
