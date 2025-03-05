@@ -25,12 +25,11 @@ module "minimal" {
   backend_seed_create     = true
   backend_seed_run        = true
 
-  backend_extra_environment_variables = {
-    "MEDUSA_CREATE_ADMIN_USER" : true,
-    "MEDUSA_ADMIN_EMAIL" : "admin@medusa-test.com",
-    "MEDUSA_ADMIN_PASSWORD" : "supersecret",
+  backend_admin_credentials = {
+    email             = "admin@medusa-test.com",
+    password          = "supersecret",
+    generate_password = false,
   }
-
   storefront_create = false
 }
 
