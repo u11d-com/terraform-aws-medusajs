@@ -42,3 +42,13 @@ variable "port" {
   description = "The port on which the DB accepts connections."
   type        = number
 }
+
+variable "backup_settings" {
+  description = "Backup settings for the RDS instance."
+  type = object({
+    window                = string
+    retention             = number
+    copy_tags_to_snapshot = bool
+  })
+  default = null
+}
