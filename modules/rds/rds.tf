@@ -18,7 +18,7 @@ resource "aws_db_subnet_group" "main" {
 
 resource "aws_db_instance" "postgres" {
   identifier                  = local.prefix
-  db_name                     = "medusa"
+  db_name                     = var.db_create ? var.db_name : null
   engine                      = "postgres"
   allocated_storage           = var.allocated_storage
   engine_version              = var.engine_version
@@ -30,6 +30,9 @@ resource "aws_db_instance" "postgres" {
   db_subnet_group_name        = aws_db_subnet_group.main.name
   skip_final_snapshot         = true
   port                        = var.port
+  backup_retention_period     = var.backup_settings != null ? var.backup_settings.retention : null
+  backup_window               = var.backup_settings != null ? var.backup_settings.window : null
+  copy_tags_to_snapshot       = var.backup_settings != null ? var.backup_settings.copy_tags_to_snapshot : null
 
   tags = local.tags
 }

@@ -42,3 +42,25 @@ variable "port" {
   description = "The port on which the DB accepts connections."
   type        = number
 }
+
+variable "backup_settings" {
+  description = "Backup settings for the RDS instance."
+  type = object({
+    window                = string
+    retention             = number
+    copy_tags_to_snapshot = bool
+  })
+  default = null
+}
+
+variable "db_create" {
+  description = "Whether to create the database."
+  type        = bool
+  default     = true
+}
+
+variable "db_name" {
+  description = "The name of the database to create. If db_create is false, this is the name of the existing database."
+  type        = string
+  default     = "medusa"
+}
