@@ -52,3 +52,15 @@ variable "backup_settings" {
   })
   default = null
 }
+
+variable "db_create" {
+  description = "Whether to create the database."
+  type        = bool
+  default     = true
+}
+
+variable "db_name" {
+  description = "The name of the database to create. If db_create is false, this is the name of the existing database."
+  type        = string
+  default     = "medusa"
+}
