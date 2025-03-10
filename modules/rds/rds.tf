@@ -18,7 +18,7 @@ resource "aws_db_subnet_group" "main" {
 
 resource "aws_db_instance" "postgres" {
   identifier                  = local.prefix
-  db_name                     = "medusa"
+  db_name                     = var.db_create ? var.db_name : null
   engine                      = "postgres"
   allocated_storage           = var.allocated_storage
   engine_version              = var.engine_version
