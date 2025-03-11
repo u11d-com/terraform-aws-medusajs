@@ -169,9 +169,9 @@ variable "extra_secrets" {
   }))
 }
 
-variable "custom_domain" {
-  description = "Custom domain for the CloudFront distribution"
-  type        = string
+variable "custom_domains" {
+  description = "List of custom domains to use for the CloudFront distribution"
+  type        = list(string)
   default     = null
 }
 

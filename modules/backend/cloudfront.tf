@@ -38,7 +38,7 @@ resource "aws_cloudfront_distribution" "main" {
   enabled = true
   comment = title(local.prefix)
 
-  aliases = var.custom_domain != null ? [var.custom_domain] : []
+  aliases = var.custom_domains != null ? var.custom_domains : []
 
   origin {
     domain_name = aws_lb.main.dns_name
@@ -58,11 +58,11 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = var.custom_domain != null ? var.acm_certificate_arn : null
-    ssl_support_method       = var.custom_domain != null ? "sni-only" : null
-    minimum_protocol_version = var.custom_domain != null ? "TLSv1.2_2021" : null
+    acm_certificate_arn      = var.custom_domains != null ? var.acm_certificate_arn : null
+    ssl_support_method       = var.custom_domains != null ? "sni-only" : null
+    minimum_protocol_version = var.custom_domains != null ? "TLSv1.2_2021" : null
 
-    cloudfront_default_certificate = var.custom_domain == null ? true : null
+    cloudfront_default_certificate = var.custom_domains == null ? true : null
   }
 
   default_cache_behavior {
