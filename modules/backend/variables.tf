@@ -168,3 +168,20 @@ variable "extra_secrets" {
     key = string
   }))
 }
+
+variable "custom_domains" {
+  description = "List of custom domains to use for the CloudFront distribution"
+  type        = list(string)
+  default     = null
+}
+
+variable "acm_certificate_arn" {
+  description = "ARN of the ACM certificate to use for the CloudFront distribution"
+  type        = string
+  default     = null
+
+  validation {
+    condition     = var.acm_certificate_arn == null || can(regex("^arn:aws:acm:us-east-1:", var.acm_certificate_arn))
+    error_message = "The ACM certificate must be in the us-east-1 region for use with CloudFront."
+  }
+}
