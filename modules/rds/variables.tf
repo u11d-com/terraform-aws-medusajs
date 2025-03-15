@@ -64,3 +64,9 @@ variable "db_name" {
   type        = string
   default     = "medusa"
 }
+
+variable "maintenance_window" {
+  description = "The weekly time range during which system maintenance can occur, in UTC."
+  type        = string
+  default     = null
+}

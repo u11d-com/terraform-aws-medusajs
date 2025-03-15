@@ -106,12 +106,13 @@ resource "aws_ecs_task_definition" "main" {
 }
 
 resource "aws_ecs_service" "main" {
-  name                   = local.prefix
-  cluster                = aws_ecs_cluster.main.id
-  task_definition        = aws_ecs_task_definition.main.arn
-  desired_count          = var.resources.instances
-  enable_execute_command = true
-  launch_type            = "FARGATE"
+  name                              = local.prefix
+  cluster                           = aws_ecs_cluster.main.id
+  task_definition                   = aws_ecs_task_definition.main.arn
+  desired_count                     = var.resources.instances
+  enable_execute_command            = true
+  health_check_grace_period_seconds = var.health_check_grace_period_seconds
+  launch_type                       = "FARGATE"
   network_configuration {
     security_groups = concat([aws_security_group.ecs.id], var.extra_security_group_ids)
     subnets         = var.vpc.private_subnet_ids
@@ -120,6 +121,14 @@ resource "aws_ecs_service" "main" {
     container_name   = local.container_name
     target_group_arn = aws_lb_target_group.main.arn
     container_port   = var.container_port
+  }
+
+  dynamic "deployment_circuit_breaker" {
+    for_each = var.deployment_circuit_breaker != null ? [1] : []
+    content {
+      enable   = var.deployment_circuit_breaker.enable != null ? var.deployment_circuit_breaker.enable : null
+      rollback = var.Deployment_circuit_breaker.rollback != null ? var.deployment_circuit_breaker.rollback : null
+    }
   }
 
   wait_for_steady_state = true
