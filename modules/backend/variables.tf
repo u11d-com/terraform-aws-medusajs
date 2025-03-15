@@ -185,3 +185,18 @@ variable "acm_certificate_arn" {
     error_message = "The ACM certificate must be in the us-east-1 region for use with CloudFront."
   }
 }
+
+variable "deployment_circuit_breaker" {
+  description = "Deployment circuit breaker configuration"
+  type = object({
+    enable   = bool
+    rollback = bool
+  })
+  default = null
+}
+
+variable "health_check_grace_period_seconds" {
+  description = "The grace period for health checks in seconds"
+  type        = number
+  default     = null
+}

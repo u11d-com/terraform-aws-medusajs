@@ -24,6 +24,7 @@ resource "aws_db_instance" "postgres" {
   engine_version              = var.engine_version
   instance_class              = var.instance_class
   manage_master_user_password = true
+  maintenance_window          = var.maintenance_window
   username                    = var.username
   publicly_accessible         = false
   vpc_security_group_ids      = [aws_security_group.server.id]
