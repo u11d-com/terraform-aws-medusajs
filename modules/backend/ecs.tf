@@ -84,6 +84,14 @@ locals {
 resource "aws_ecs_cluster" "main" {
   name = local.prefix
 
+  dynamic "setting" {
+    for_each = var.ecs_container_insights != null ? [1] : []
+    content {
+      name  = "containerInsights"
+      value = var.ecs_container_insights
+    }
+  }
+
   tags = local.tags
 }
 

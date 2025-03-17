@@ -185,3 +185,14 @@ variable "acm_certificate_arn" {
     error_message = "The ACM certificate must be in the us-east-1 region for use with CloudFront."
   }
 }
+
+variable "ecs_container_insights" {
+  description = "Enable container insights for the ECS cluster"
+  type        = string
+  default     = null
+
+  validation {
+    condition     = var.ecs_container_insights == null || contains(["enabled", "enhanced"], var.ecs_container_insights)
+    error_message = "The ecs_container_insights value must be either 'enabled', 'enhanced', or null."
+  }
+}
