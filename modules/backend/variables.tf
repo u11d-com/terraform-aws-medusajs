@@ -189,10 +189,10 @@ variable "acm_certificate_arn" {
 variable "ecs_container_insights" {
   description = "Enable container insights for the ECS cluster"
   type        = string
-  default     = null
+  default     = "disabled"
 
   validation {
-    condition     = var.ecs_container_insights == null || contains(["enabled", "enhanced"], var.ecs_container_insights)
-    error_message = "The ecs_container_insights value must be either 'enabled', 'enhanced', or null."
+    condition     = var.ecs_container_insights == null || contains(["enabled", "enhanced", "disabled"], var.ecs_container_insights)
+    error_message = "The ecs_container_insights value must be either 'enabled', 'enhanced' or 'disabled'."
   }
 }
