@@ -200,3 +200,14 @@ variable "health_check_grace_period_seconds" {
   type        = number
   default     = null
 }
+
+variable "ecs_container_insights" {
+  description = "Enable container insights for the ECS cluster"
+  type        = string
+  default     = "disabled"
+
+  validation {
+    condition     = contains(["enabled", "enhanced", "disabled"], var.ecs_container_insights)
+    error_message = "The ecs_container_insights value must be either 'enabled', 'enhanced' or 'disabled'."
+  }
+}
