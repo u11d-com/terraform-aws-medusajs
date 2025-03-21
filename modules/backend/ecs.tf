@@ -126,8 +126,8 @@ resource "aws_ecs_service" "main" {
   dynamic "deployment_circuit_breaker" {
     for_each = var.deployment_circuit_breaker != null ? [1] : []
     content {
-      enable   = var.deployment_circuit_breaker.enable != null ? var.deployment_circuit_breaker.enable : null
-      rollback = var.Deployment_circuit_breaker.rollback != null ? var.deployment_circuit_breaker.rollback : null
+      enable   = var.deployment_circuit_breaker.enable
+      rollback = var.deployment_circuit_breaker.rollback
     }
   }
 
