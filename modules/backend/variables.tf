@@ -186,6 +186,21 @@ variable "acm_certificate_arn" {
   }
 }
 
+variable "deployment_circuit_breaker" {
+  description = "Deployment circuit breaker configuration"
+  type = object({
+    enable   = bool
+    rollback = bool
+  })
+  default = null
+}
+
+variable "health_check_grace_period_seconds" {
+  description = "The grace period for health checks in seconds"
+  type        = number
+  default     = null
+}
+
 variable "ecs_container_insights" {
   description = "Enable container insights for the ECS cluster"
   type        = string
