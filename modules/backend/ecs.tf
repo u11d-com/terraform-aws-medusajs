@@ -84,6 +84,11 @@ locals {
 resource "aws_ecs_cluster" "main" {
   name = local.prefix
 
+  setting {
+    name  = "containerInsights"
+    value = var.ecs_container_insights
+  }
+
   tags = local.tags
 }
 
