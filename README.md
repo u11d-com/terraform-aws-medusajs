@@ -31,7 +31,7 @@ This module is composed of the following sub-modules, each responsible for deplo
 To use this module, include it in your Terraform configuration file, specifying the source and required variables. The following example shows the most basic usage:
 
 ```hcl
-module "minimal" {
+module "medusajs" {
   source = "u11d-com/medusajs/aws"
 
   project     = local.project
