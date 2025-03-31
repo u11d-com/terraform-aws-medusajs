@@ -187,4 +187,4 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 
 
 ---
-:heart: _Technology made with passion by u11d_
+:heart: _Technology made with passion by [u11d](https://u11d.com)_
