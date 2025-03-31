@@ -59,12 +59,10 @@ Before you begin, make sure you have the following:
 
 1.  Clone this repository: [terraform-aws-medusajs](https://github.com/u11d-com/terraform-aws-medusajs)
     ```bash
-    git clone https://github.com/u11d-com/terraform-aws-medusajs.git
-    cd terraform-aws-medusajs/examples/complete
+    $ git clone https://github.com/u11d-com/terraform-aws-medusajs.git
+    $ cd terraform-aws-medusajs/examples/complete
     ```
-
 <details>
-
 <summary>2. Review the <code>main.tf</code> file (click to expand)</summary>
 
 This file contains the Terraform configuration for deploying the complete Medusa infrastructure.
@@ -131,22 +129,22 @@ This file contains the Terraform configuration for deploying the complete Medusa
 
 1.  Initialize Terraform:
     ```bash
-    terraform init
+    $ terraform init
     ```
     This command will download the necessary providers and modules.
 1.  (Optional) Create a Terraform [workspace](https://developer.hashicorp.com/terraform/cli/workspaces): To keep environments separated, you can create a workspace for your deployment. Example for `medusa-complete` workspace is:
     ```bash
-    terraform workspace new medusa-complete
-    terraform workspace select medusa-complete
+    $ terraform workspace new medusa-complete
+    $ terraform workspace select medusa-complete
     ```
 1.  Plan the deployment:
     ```bash
-    terraform plan
+    $ terraform plan
     ```
     This command will show you what resources Terraform will create, modify, or destroy. Review the plan carefully.
 1.  Apply the deployment:
     ```bash
-    terraform apply
+    $ terraform apply
     ```
     Terraform will prompt you to confirm the changes. Type `yes` to proceed with the deployment.
     This will deploy the complete infrastructure on AWS. It may take some time to complete.

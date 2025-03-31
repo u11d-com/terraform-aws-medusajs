@@ -21,7 +21,7 @@ module "minimal" {
 
   ecr_storefront_create = true
 
-  backend_container_image = "ghcr.io/u11d-com/medusa-backend:2.6.0-latest"
+  backend_container_image = "ghcr.io/u11d-com/medusa-backend:2.6.1-latest"
   backend_seed_create     = true
   backend_seed_run        = true
 

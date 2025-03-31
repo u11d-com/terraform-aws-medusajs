@@ -17,12 +17,12 @@ This module provides a complete set of composable sub-modules for each component
 
 This module is composed of the following sub-modules, each responsible for deploying specific resources. These sub-modules are also available as stand-alone modules and can be found in the `modules` directory.
 
--   [`backend`](/modules/backend): Creates resources for the Medusa backend application.
--   [`ecr`](/modules/ecr): Creates Elastic Container Registry (ECR) repositories for storing Docker images.
--   [`elasticache`](/modules/elasticache): Creates an ElastiCache Redis instance for Medusa backend (communication/cache).
--   [`rds`](/modules/rds): Creates an RDS PostgreSQL database instance for data persistence.
--   [`storefront`](/modules/storefront): Creates resources for the Medusa storefront application.
--   [`vpc`](/modules/vpc): Creates a Virtual Private Cloud (VPC) with necessary networking components.
+-   [`backend`](https://github.com/u11d-com/terraform-aws-medusajs/tree/v2/modules/backend): Creates resources for the Medusa backend application.
+-   [`ecr`](https://github.com/u11d-com/terraform-aws-medusajs/tree/v2/modules/ecr): Creates Elastic Container Registry (ECR) repositories for storing Docker images.
+-   [`elasticache`](https://github.com/u11d-com/terraform-aws-medusajs/tree/v2/modules/elasticache): Creates an ElastiCache Redis instance for Medusa backend (communication/cache).
+-   [`rds`](https://github.com/u11d-com/terraform-aws-medusajs/tree/v2/modules/rds): Creates an RDS PostgreSQL database instance for data persistence.
+-   [`storefront`](https://github.com/u11d-com/terraform-aws-medusajs/tree/v2/modules/storefront): Creates resources for the Medusa storefront application.
+-   [`vpc`](https://github.com/u11d-com/terraform-aws-medusajs/tree/v2/modules/vpc): Creates a Virtual Private Cloud (VPC) with necessary networking components.
 
 ## Usage
 
@@ -31,25 +31,25 @@ This module is composed of the following sub-modules, each responsible for deplo
 To use this module, include it in your Terraform configuration file, specifying the source and required variables. The following example shows the most basic usage:
 
 ```hcl
-module "medusajs" {
+module "minimal" {
   source = "u11d-com/medusajs/aws"
 
-  ## Required global variables (no defaults)
-  project     = "my-project"
-  environment = "example"
-  owner       = "my-team"
+  project     = local.project
+  environment = local.environment
+  owner       = local.owner
 
   ecr_storefront_create = true
 
-  // Using example image build for Medusa starter
-  backend_container_image = "ghcr.io/u11d-com/medusa-backend:1.20.10-latest"
-  backend_seed_create = true
-  backend_seed_run    = true
-  backend_extra_environment_variables = {
-    "NODE_ENV" : "development"
-  }
+  backend_container_image = "ghcr.io/u11d-com/medusa-backend:2.6.1-latest"
+  backend_seed_create     = true
+  backend_seed_run        = true
 
-  storefront_create          = false // Enable once image is built and pushed
+  backend_admin_credentials = {
+    email             = "admin@medusa-test.com",
+    password          = "supersecret",
+    generate_password = false,
+  }
+  storefront_create = false
 }
 ```
 
@@ -97,9 +97,9 @@ In this example, all resource creation is disabled and root module will deploy n
 
 ## Examples
 
-- [Minimal](/examples/minimal) - Minimal configuration needed for a basic deployment.
-- [Complete](/examples/complete) - Complete example using all available variables, showcasing full configuration options.
-- [External resources](/examples/external-resources) - Example using an existing VPC and external image repositories.
+- [Minimal](https://github.com/u11d-com/terraform-aws-medusajs/tree/v2/examples/minimal) - Minimal configuration needed for a basic deployment.
+- [Complete](https://github.com/u11d-com/terraform-aws-medusajs/tree/v2/examples/complete) - Complete example using all available variables, showcasing full configuration options.
+- [External resources](https://github.com/u11d-com/terraform-aws-medusajs/tree/v2/examples/external-resources) - Example using an existing VPC and external image repositories.
 
 ## Inputs
 Detailed information about each input variable can be found in the module's documentation, or in the [variables.tf](variables.tf) file in the root directory.
@@ -130,7 +130,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
 | <a name="requirement_archive"></a> [archive](#requirement\_archive) | ~> 2.7.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.87.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.93.0 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6.3 |
 
@@ -182,7 +182,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 | <a name="input_backend_logs"></a> [backend\_logs](#input\_backend\_logs) | Logs configuration settings | <pre>object({<br/>    group     = string<br/>    retention = number<br/>    prefix    = string<br/>  })</pre> | <pre>{<br/>  "group": "/medusa-backend",<br/>  "prefix": "container",<br/>  "retention": 30<br/>}</pre> | no |
 | <a name="input_backend_resources"></a> [backend\_resources](#input\_backend\_resources) | ECS Task configuration settings | <pre>object({<br/>    instances = number<br/>    cpu       = number<br/>    memory    = number<br/>  })</pre> | <pre>{<br/>  "cpu": 2048,<br/>  "instances": 1,<br/>  "memory": 4096<br/>}</pre> | no |
 | <a name="input_backend_run_migrations"></a> [backend\_run\_migrations](#input\_backend\_run\_migrations) | Specify backend migrations should be run on start. | `bool` | `true` | no |
-| <a name="input_backend_seed_command"></a> [backend\_seed\_command](#input\_backend\_seed\_command) | Command to run to seed the database. | `string` | `"npx medusa seed -f ./data/seed.json"` | no |
+| <a name="input_backend_seed_command"></a> [backend\_seed\_command](#input\_backend\_seed\_command) | Command to run to seed the database. | `string` | `"yarn seed"` | no |
 | <a name="input_backend_seed_create"></a> [backend\_seed\_create](#input\_backend\_seed\_create) | Enable backend seed function creation | `bool` | `false` | no |
 | <a name="input_backend_seed_fail_on_error"></a> [backend\_seed\_fail\_on\_error](#input\_backend\_seed\_fail\_on\_error) | Whether to fail the deployment if the seed command fails. | `bool` | `true` | no |
 | <a name="input_backend_seed_run"></a> [backend\_seed\_run](#input\_backend\_seed\_run) | Specify backend seed should be run after deployment. | `bool` | `false` | no |
@@ -239,4 +239,4 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 <!-- END_TF_DOCS -->
 
 ---
-:heart: _Technology made with passion by u11d_
+:heart: _Technology made with passion by [u11d](https://u11d.com)_
