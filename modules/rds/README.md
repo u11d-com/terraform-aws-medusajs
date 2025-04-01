@@ -4,14 +4,14 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.87.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.93.0 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.87.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.93.0 |
 
 ## Modules
 
@@ -37,9 +37,13 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_allocated_storage"></a> [allocated\_storage](#input\_allocated\_storage) | The allocated storage in gigabytes. | `number` | n/a | yes |
+| <a name="input_backup_settings"></a> [backup\_settings](#input\_backup\_settings) | Backup settings for the RDS instance. | <pre>object({<br/>    window                = string<br/>    retention             = number<br/>    copy_tags_to_snapshot = bool<br/>  })</pre> | `null` | no |
 | <a name="input_context"></a> [context](#input\_context) | Project context containing project name and environment | <pre>object({<br/>    project     = string<br/>    environment = string<br/>    Owner       = string<br/>    ManagedBy   = string<br/>  })</pre> | n/a | yes |
+| <a name="input_db_create"></a> [db\_create](#input\_db\_create) | Whether to create the database. | `bool` | `true` | no |
+| <a name="input_db_name"></a> [db\_name](#input\_db\_name) | The name of the database to create. If db\_create is false, this is the name of the existing database. | `string` | `"medusa"` | no |
 | <a name="input_engine_version"></a> [engine\_version](#input\_engine\_version) | The postgres engine version to use. You can provide a prefix of the version such as 8.0 (for 8.0.36). | `string` | n/a | yes |
 | <a name="input_instance_class"></a> [instance\_class](#input\_instance\_class) | The instance type of the RDS instance. | `string` | n/a | yes |
+| <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | The weekly time range during which system maintenance can occur, in UTC. | `string` | `null` | no |
 | <a name="input_port"></a> [port](#input\_port) | The port on which the DB accepts connections. | `number` | n/a | yes |
 | <a name="input_username"></a> [username](#input\_username) | The username used to authenticate with the PostgreSQL database. | `string` | n/a | yes |
 | <a name="input_vpc"></a> [vpc](#input\_vpc) | VPC configuration object containing VPC ID and subnet IDs | <pre>object({<br/>    id                 = string<br/>    public_subnet_ids  = list(string)<br/>    private_subnet_ids = list(string)<br/>  })</pre> | n/a | yes |

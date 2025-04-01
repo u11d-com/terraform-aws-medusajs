@@ -69,15 +69,15 @@ data "aws_iam_policy_document" "ecs_execution_policy" {
 }
 
 resource "aws_iam_role" "ecs_execution" {
-  name_prefix               = "${local.prefix}-ecs-execution-"
+  name_prefix        = "${local.prefix}-ecs-execution-"
   assume_role_policy = data.aws_iam_policy_document.ecs_execution_assume_role.json
 
   tags = local.tags
 }
 
 resource "aws_iam_policy" "ecs_execution" {
-  name_prefix   = "${local.prefix}-ecs-execution-"
-  policy = data.aws_iam_policy_document.ecs_execution_policy.json
+  name_prefix = "${local.prefix}-ecs-execution-"
+  policy      = data.aws_iam_policy_document.ecs_execution_policy.json
 
   tags = local.tags
 }

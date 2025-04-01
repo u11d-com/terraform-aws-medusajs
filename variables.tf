@@ -20,7 +20,7 @@ variable "environment" {
   }
 
   validation {
-    condition     = length(format("%s-%s", var.project, var.environment)) <= 10
+    condition     = length(format("%s%s", var.project, var.environment)) <= 10
     error_message = "The combined length of project and environment names (including hyphen) must not exceed 10 characters."
   }
 }
@@ -373,7 +373,7 @@ variable "backend_seed_run" {
 variable "backend_seed_command" {
   description = "Command to run to seed the database."
   type        = string
-  default     = "npx medusa seed -f ./data/seed.json"
+  default     = "yarn seed"
 }
 
 variable "backend_seed_timeout" {

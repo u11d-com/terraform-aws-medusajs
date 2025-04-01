@@ -1,5 +1,5 @@
 locals {
-  origin_id = "${local.prefix}-backend-lb"
+  origin_id = "${local.prefix}-lb"
 }
 
 resource "aws_cloudfront_vpc_origin" "main" {
@@ -15,6 +15,12 @@ resource "aws_cloudfront_vpc_origin" "main" {
       items    = ["TLSv1.2"]
     }
   }
+
+  timeouts {
+    create = "30m"
+  }
+
+  depends_on = [aws_lb_target_group.main, aws_security_group.lb]
 
   tags = local.tags
 }
