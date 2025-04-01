@@ -35,8 +35,8 @@ Medusa starter kits typically use the Next.js framework to build the storefront 
 This module is designed to integrate with *existing* infrastructure and uses *external* container registries for your Medusa storefront image. The typical deployment process involves the following steps:
 
 1. **Deploy the Medusa backend:** First, you must deploy the backend infrastructure using this Terraform module. Obtain the backend URL from the module's output.
-2.  **Build and push the storefront image:** Build your Next.js storefront application, pointing it to the deployed backend URL from step 1. Then, either build a Docker image of your storefront and push it to your *external* container registry, *or use a pre-built storefront image and proceed to step 3*.
-3.  **Deploy the storefront:** Finally, you can configure this module to deploy storefront from the image stored in your *external* registry, by setting `storefront_create` option to true and providing proper image path, including the tag, using `storefront_container_image` variable, as well as providing registry credentials. If you already have a prebuilt storefront application as a Docker image, you can use this module to deploy it from your *external* registry, by providing the `storefront_container_image` variable with the full image path, including the tag, and relevant registry credentials.
+2. **Build and push the storefront image:** Build your Next.js storefront application, pointing it to the deployed backend URL from step 1. Then, either build a Docker image of your storefront and push it to your *external* container registry, *or use a pre-built storefront image and proceed to step 3*.
+3. **Deploy the storefront:** Finally, you can configure this module to deploy storefront from the image stored in your *external* registry, by setting `storefront_create` option to true and providing proper image path, including the tag, using `storefront_container_image` variable, as well as providing registry credentials. If you already have a prebuilt storefront application as a Docker image, you can use this module to deploy it from your *external* registry, by providing the `storefront_container_image` variable with the full image path, including the tag, and relevant registry credentials.
 
 While this module primarily focuses on backend deployment, it also supports storefront deployment as mentioned in step 3.
 
@@ -57,64 +57,79 @@ Before you begin, make sure you have the following:
 ### Configuration
 
 1. Clone this repository: [terraform-aws-medusajs](https://github.com/u11d-com/terraform-aws-medusajs)
-    ```bash
-    $ git clone https://github.com/u11d-com/terraform-aws-medusajs.git
-    $ cd terraform-aws-medusajs/examples/external-resources
+
+    ```shell
+    git clone https://github.com/u11d-com/terraform-aws-medusajs.git
+    cd terraform-aws-medusajs/examples/external-resources
     ```
+
+<!-- markdownlint-disable MD033 -->
 <details>
 <summary>2. Review the <code>main.tf</code> file (click to expand)</summary>
 
 This file contains the Terraform configuration for deploying the Medusa infrastructure.
-  - terraform block: Specifies the required Terraform version.
-  - locals block: Defines local variables for project and environment names. You can customize these.
-  - provider "aws" block: Configures the AWS provider and sets default tags for all resources. Change the region to match your desired location.
-  - module "external_resources" block: This is the core of the setup. It uses the `u11d-com/terraform-aws-medusajs` module to create your infrastructure with external resources. Here's a breakdown of the key parameters:
-    - source: The location of the Terraform module.
-    - project and environment: These parameters are passed to the module and may be used to tag the AWS resources or other logic inside the module
-    - vpc_create: Set to `false` to indicate usage of an existing VPC.
-    - vpc_id: ID of the existing VPC.
-    - public_subnet_ids: A list of IDs of the public subnets in your VPC.
-    - private_subnet_ids: A list of IDs of the private subnets in your VPC.
-    - ecr_backend_create: Set to `false` to prevent the creation of backend ECR repository.
-    - ecr_storefront_create: Set to `false` to prevent the creation of storefront ECR repository.
-    - backend_create: Specifies if to deploy backend application
-    - backend_container_image: Specifies the Docker image URL for the Medusa backend.
-    - backend_container_registry_credentials:  Credentials to access the external backend registry.
-    - storefront_create: Specifies if to deploy storefront application.
-    - storefront_container_image: Specifies the Docker image URL for the Medusa storefront.
-    - storefront_container_registry_credentials:  Credentials to access the external storefront registry.
-    - elasticache_create: Specifies if to create ElastiCache Redis cluster.
-    - rds_create: Specifies if to create RDS PostgreSQL database.
-  - output blocks: Define values that will be displayed after deployment.
+
+- `terraform` block: Specifies the required Terraform version.
+- `locals` block: Defines local variables for project and environment names. You can customize these.
+- `provider "aws"` block: Configures the AWS provider and sets default tags for all resources. Change the region to match your desired location.
+- `module "external_resources"` block: This is the core of the setup. It uses the `u11d-com/terraform-aws-medusajs` module to create your infrastructure with external resources. Here's a breakdown of the key parameters:
+  - `source`: The location of the Terraform module.
+  - `project`, `environment` and `owner`: These parameters are passed to the module and may be used to tag the AWS resources or other logic inside the module
+  - `vpc_create`: Set to `false` to indicate usage of an existing VPC.
+  - `vpc_id`: ID of the existing VPC.
+  - `public_subnet_ids`: A list of IDs of the public subnets in your VPC.
+  - `private_subnet_ids`: A list of IDs of the private subnets in your VPC.
+  - `ecr_backend_create`: Set to `false` to prevent the creation of backend ECR repository.
+  - `ecr_storefront_create`: Set to `false` to prevent the creation of storefront ECR repository.
+  - `backend_create`: Specifies if to deploy backend application
+  - `backend_container_image`: Specifies the Docker image URL for the Medusa backend.
+  - `backend_container_registry_credentials`:  Credentials to access the external backend registry.
+  - `storefront_create`: Specifies if to deploy storefront application.
+  - `storefront_container_image`: Specifies the Docker image URL for the Medusa storefront.
+  - `storefront_container_registry_credentials`:  Credentials to access the external storefront registry.
+  - `elasticache_create`: Specifies if to create ElastiCache Redis cluster.
+  - `rds_create`: Specifies if to create RDS PostgreSQL database.
+- `output` blocks: Define values that will be displayed after deployment.
+
 </details>
+<!-- markdownlint-enable MD033 -->
 
 ### Deployment
 
-1.  Initialize Terraform:
-    ```bash
-    $ terraform init
+1. Initialize Terraform:
+
+    ```shell
+    terraform init
     ```
+
     This command will download the necessary providers and modules.
-2.  (Optional) Create a Terraform [workspace](https://developer.hashicorp.com/terraform/cli/workspaces): To keep environments separated, you can create a workspace for your deployment. Example for `medusa-external` workspace is:
-    ```bash
-    $ terraform workspace new medusa-external
-    $ terraform workspace select medusa-external
+2. (Optional) Create a Terraform [workspace](https://developer.hashicorp.com/terraform/cli/workspaces): To keep environments separated, you can create a workspace for your deployment. Example for `medusa-external` workspace is:
+
+    ```shell
+    terraform workspace new medusa-external
+    terraform workspace select medusa-external
     ```
-3.  Plan the deployment:
-    ```bash
-    $ terraform plan
+
+3. Plan the deployment:
+
+    ```shell
+    terraform plan
     ```
+
     This command will show you what resources Terraform will create, modify, or destroy. Review the plan carefully.
-4.  Apply the deployment:
-    ```bash
-    $ terraform apply
+4. Apply the deployment:
+
+    ```shell
+    terraform apply
     ```
+
     Terraform will prompt you to confirm the changes. Type `yes` to proceed with the deployment.
     This will deploy the defined infrastructure on AWS. It may take some time to complete.
 
 ### Outputs
 
 After successful deployment, Terraform will display output values. These include:
+
 - `backend_url`: The URL of the deployed backend application.
 - `storefront_url`: The URL of the deployed storefront application.
 
@@ -144,6 +159,5 @@ Feel free to contribute to this example or the `u11d-com/terraform-aws-medusajs`
 
 This example is licensed under the [Apache-2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
 
-
 ---
-:heart: _Technology made with passion by [u11d](https://u11d.com)_
+:heart: *Technology made with passion by [u11d](https://u11d.com)*

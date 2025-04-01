@@ -57,21 +57,25 @@ Before you begin, make sure you have the following:
 
 ### Configuration
 
-1.  Clone this repository: [terraform-aws-medusajs](https://github.com/u11d-com/terraform-aws-medusajs)
-    ```bash
-    $ git clone https://github.com/u11d-com/terraform-aws-medusajs.git
-    $ cd terraform-aws-medusajs/examples/complete
+1. Clone this repository: [terraform-aws-medusajs](https://github.com/u11d-com/terraform-aws-medusajs)
+
+    ```shell
+    git clone https://github.com/u11d-com/terraform-aws-medusajs.git
+    cd terraform-aws-medusajs/examples/complete
     ```
+
+<!-- markdownlint-disable MD033 -->
 <details>
 <summary>2. Review the <code>main.tf</code> file (click to expand)</summary>
 
 This file contains the Terraform configuration for deploying the complete Medusa infrastructure.
-  - `terraform` block: Specifies the required Terraform version.
-  - `locals` block: Defines local variables for project and environment names. You can customize these.
-  - `provider "aws"` block: Configures the AWS provider and sets default tags for all resources. Change the region to match your desired location.
-  - `module "complete"` block: This is the core of the setup. It uses the `u11d-com/terraform-aws-medusajs` module to create a complete infrastructure, using all available parameters. Here's a breakdown of the key parameter categories:
-  - **Global Settings:**
-    - `project` and `environment`: These parameters are passed to the module and may be used to tag the AWS resources or other logic inside the module
+
+- `terraform` block: Specifies the required Terraform version.
+- `locals` block: Defines local variables for project and environment names. You can customize these.
+- `provider "aws"` block: Configures the AWS provider and sets default tags for all resources. Change the region to match your desired location.
+- `module "complete"` block: This is the core of the setup. It uses the `u11d-com/terraform-aws-medusajs` module to create a complete infrastructure, using all available parameters. Here's a breakdown of the key parameter categories:
+- **Global Settings:**
+  - `project`, `environment` and `owner`: These parameters are passed to the module and may be used to tag the AWS resources or other logic inside the module
   - **ECR Configuration:**
     - `ecr_backend_create`: Set to `true` to create a backend ECR repository.
     - `ecr_backend_retention_count`: Sets the number of images to retain in the backend ECR repository.
@@ -122,36 +126,48 @@ This file contains the Terraform configuration for deploying the complete Medusa
     - `storefront_extra_security_group_ids`: Additional security group IDs to attach to storefront.
     - `storefront_extra_environment_variables`: Extra environment variables for the storefront application.
     - `storefront_extra_secrets`: Extra secrets to inject into storefront application.
-  - `output` blocks: Define values that will be displayed after deployment.
+- `output` blocks: Define values that will be displayed after deployment.
+
 </details>
+<!-- markdownlint-enable MD033 -->
 
 ### Deployment
 
-1.  Initialize Terraform:
-    ```bash
-    $ terraform init
+1. Initialize Terraform:
+
+    ```shell
+    terraform init
     ```
+
     This command will download the necessary providers and modules.
-1.  (Optional) Create a Terraform [workspace](https://developer.hashicorp.com/terraform/cli/workspaces): To keep environments separated, you can create a workspace for your deployment. Example for `medusa-complete` workspace is:
-    ```bash
-    $ terraform workspace new medusa-complete
-    $ terraform workspace select medusa-complete
+1. (Optional) Create a Terraform [workspace](https://developer.hashicorp.com/terraform/cli/workspaces): To keep environments separated, you can create a workspace for your deployment. Example for `medusa-complete` workspace is:
+
+    ```shell
+    terraform workspace new medusa-complete
+    terraform workspace select medusa-complete
     ```
-1.  Plan the deployment:
-    ```bash
-    $ terraform plan
+
+1. Plan the deployment:
+
+    ```shell
+    terraform plan
     ```
+
     This command will show you what resources Terraform will create, modify, or destroy. Review the plan carefully.
-1.  Apply the deployment:
-    ```bash
-    $ terraform apply
+
+1. Apply the deployment:
+
+    ```shell
+    terraform apply
     ```
+
     Terraform will prompt you to confirm the changes. Type `yes` to proceed with the deployment.
     This will deploy the complete infrastructure on AWS. It may take some time to complete.
 
 ### Outputs
 
 After successful deployment, Terraform will display output values. These include:
+
 - `ecr_backend_url`: The URL of the backend ECR repository.
 - `ecr_storefront_url`: The URL of the storefront ECR repository.
 - `backend_url`: The URL of the deployed backend application.
@@ -185,6 +201,5 @@ Feel free to contribute to this example or the `u11d-com/terraform-aws-medusajs`
 
 This example is licensed under the [Apache-2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
 
-
 ---
-:heart: _Technology made with passion by [u11d](https://u11d.com)_
+:heart: *Technology made with passion by [u11d](https://u11d.com)*
