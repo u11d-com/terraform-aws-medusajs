@@ -129,7 +129,6 @@ We welcome contributions to this module! If you have bug fixes, new features, or
 
 This example is licensed under the [Apache-2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
 
-<!-- markdownlint-disable MD033 MD024 -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

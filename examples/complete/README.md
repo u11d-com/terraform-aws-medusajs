@@ -64,7 +64,6 @@ Before you begin, make sure you have the following:
     cd terraform-aws-medusajs/examples/complete
     ```
 
-<!-- markdownlint-disable MD033 -->
 <details>
 <summary>2. Review the <code>main.tf</code> file (click to expand)</summary>
 
@@ -129,7 +128,6 @@ This file contains the Terraform configuration for deploying the complete Medusa
 - `output` blocks: Define values that will be displayed after deployment.
 
 </details>
-<!-- markdownlint-enable MD033 -->
 
 ### Deployment
 
