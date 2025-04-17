@@ -207,6 +207,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 | <a name="input_elasticache_nodes_num"></a> [elasticache\_nodes\_num](#input\_elasticache\_nodes\_num) | The initial number of cache nodes that the cache cluster will have. | `number` | `1` | no |
 | <a name="input_elasticache_port"></a> [elasticache\_port](#input\_elasticache\_port) | Port exposed by the redis to redirect traffic to. | `number` | `6379` | no |
 | <a name="input_elasticache_redis_engine_version"></a> [elasticache\_redis\_engine\_version](#input\_elasticache\_redis\_engine\_version) | The version of the redis that will be used to create the Elasticache cluster. You can provide a prefix of the version such as 7.1 (for 7.1.4). | `string` | `"7.1"` | no |
+| <a name="input_elasticache_redis_parameter_group_family"></a> [elasticache\_redis\_parameter\_group\_family](#input\_elasticache\_redis\_parameter\_group\_family) | The family of the ElastiCache Redis parameter group (e.g., 'redis7', 'redis6.x'). | `string` | `"redis7"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The name of the environment for which infrastructure is being provisioned. | `string` | n/a | yes |
 | <a name="input_owner"></a> [owner](#input\_owner) | The owner of the infrastructure resources. | `string` | n/a | yes |
 | <a name="input_private_subnet_ids"></a> [private\_subnet\_ids](#input\_private\_subnet\_ids) | List of private subnet IDs. Required if vpc\_create is false. | `list(string)` | `null` | no |

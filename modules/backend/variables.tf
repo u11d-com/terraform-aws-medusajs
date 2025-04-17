@@ -218,31 +218,31 @@ variable "database_url" {
   type        = string
 }
 
-variable "db_host" {
+variable "database_host" {
   type        = string
   description = "Database host"
   default     = null
 }
 
-variable "db_port" {
+variable "database_port" {
   type        = string
   description = "Database port"
   default     = null
 }
 
-variable "db_name" {
+variable "database_name" {
   type        = string
   description = "Database name"
   default     = null
 }
 
-variable "db_user" {
+variable "database_user" {
   type        = string
   description = "Database user"
   default     = null
 }
 
-variable "db_password_secret_arn" {
+variable "database_password_secret_arn" {
   type        = string
   description = "Database password secret ARN"
   default     = null

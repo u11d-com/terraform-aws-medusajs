@@ -104,12 +104,12 @@ No modules.
 | <a name="input_context"></a> [context](#input\_context) | Project context containing project name and environment | <pre>object({<br/>    project     = string<br/>    environment = string<br/>    Owner       = string<br/>    ManagedBy   = string<br/>  })</pre> | n/a | yes |
 | <a name="input_cookie_secret"></a> [cookie\_secret](#input\_cookie\_secret) | Secret used for cookie signing. If not provided, a random secret will be generated. | `string` | n/a | yes |
 | <a name="input_custom_domains"></a> [custom\_domains](#input\_custom\_domains) | List of custom domains to use for the CloudFront distribution | `list(string)` | `null` | no |
+| <a name="input_database_host"></a> [database\_host](#input\_database\_host) | Database host | `string` | `null` | no |
+| <a name="input_database_name"></a> [database\_name](#input\_database\_name) | Database name | `string` | `null` | no |
+| <a name="input_database_password_secret_arn"></a> [database\_password\_secret\_arn](#input\_database\_password\_secret\_arn) | Database password secret ARN | `string` | `null` | no |
+| <a name="input_database_port"></a> [database\_port](#input\_database\_port) | Database port | `string` | `null` | no |
 | <a name="input_database_url"></a> [database\_url](#input\_database\_url) | URL for database connection | `string` | n/a | yes |
-| <a name="input_db_host"></a> [db\_host](#input\_db\_host) | Database host | `string` | `null` | no |
-| <a name="input_db_name"></a> [db\_name](#input\_db\_name) | Database name | `string` | `null` | no |
-| <a name="input_db_password_secret_arn"></a> [db\_password\_secret\_arn](#input\_db\_password\_secret\_arn) | Database password secret ARN | `string` | `null` | no |
-| <a name="input_db_port"></a> [db\_port](#input\_db\_port) | Database port | `string` | `null` | no |
-| <a name="input_db_user"></a> [db\_user](#input\_db\_user) | Database user | `string` | `null` | no |
+| <a name="input_database_user"></a> [database\_user](#input\_database\_user) | Database user | `string` | `null` | no |
 | <a name="input_deployment_circuit_breaker"></a> [deployment\_circuit\_breaker](#input\_deployment\_circuit\_breaker) | Deployment circuit breaker configuration | <pre>object({<br/>    enable   = bool<br/>    rollback = bool<br/>  })</pre> | `null` | no |
 | <a name="input_ecr_arn"></a> [ecr\_arn](#input\_ecr\_arn) | ARN of Elastic Container Registry. | `string` | n/a | yes |
 | <a name="input_ecs_container_insights"></a> [ecs\_container\_insights](#input\_ecs\_container\_insights) | Enable container insights for the ECS cluster | `string` | `"disabled"` | no |

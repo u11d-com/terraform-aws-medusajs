@@ -3,10 +3,10 @@ locals {
 
   container_default_env = merge(
     {
-      DB_HOST : var.db_host
-      DB_PORT : var.db_port
-      DB_NAME : var.db_name
-      DB_USER : var.db_user
+      DATABASE_HOST : var.database_host
+      DATABASE_PORT : var.database_port
+      DATABASE_NAME : var.database_name
+      DATABASE_USER : var.database_user
       DATABASE_URL : var.database_url
     },
     {
@@ -26,8 +26,8 @@ locals {
 
   container_default_secrets = merge(
     {
-      DB_PASSWORD : {
-        arn = var.db_password_secret_arn
+      DATABASE_PASSWORD : {
+        arn = var.database_password_secret_arn
         key = "password::"
       },
       JWT_SECRET : {

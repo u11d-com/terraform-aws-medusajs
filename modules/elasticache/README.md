@@ -22,6 +22,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_elasticache_cluster.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_cluster) | resource |
+| [aws_elasticache_parameter_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_parameter_group) | resource |
 | [aws_elasticache_subnet_group.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticache_subnet_group) | resource |
 | [aws_security_group.client](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group.server](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
@@ -39,6 +40,7 @@ No modules.
 | <a name="input_nodes_num"></a> [nodes\_num](#input\_nodes\_num) | The initial number of cache nodes that the cache cluster will have. | `number` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | Port exposed by the redis to redirect traffic to. | `number` | n/a | yes |
 | <a name="input_redis_engine_version"></a> [redis\_engine\_version](#input\_redis\_engine\_version) | The version of the redis that will be used to create the Elasticache cluster. You can provide a prefix of the version such as 7.1 (for 7.1.4). | `string` | n/a | yes |
+| <a name="input_redis_parameter_group_family"></a> [redis\_parameter\_group\_family](#input\_redis\_parameter\_group\_family) | The family of the ElastiCache Redis parameter group (e.g., 'redis7', 'redis6.x'). | `string` | n/a | yes |
 | <a name="input_vpc"></a> [vpc](#input\_vpc) | VPC configuration object containing VPC ID and subnet IDs | <pre>object({<br/>    id                 = string<br/>    public_subnet_ids  = list(string)<br/>    private_subnet_ids = list(string)<br/>  })</pre> | n/a | yes |
 
 ## Outputs
