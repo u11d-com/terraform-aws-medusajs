@@ -104,8 +104,14 @@ module "backend" {
   resources                      = var.backend_resources
   logs                           = var.backend_logs
 
-  redis_url    = var.elasticache_create ? module.elasticache[0].url : var.redis_url
-  database_url = var.rds_create ? module.rds[0].url : var.database_url
+  redis_url = var.elasticache_create ? module.elasticache[0].url : var.redis_url
+
+  database_url           = var.rds_create ? module.rds[0].url : var.database_url
+  db_host                = var.rds_create ? module.rds[0].host : null
+  db_port                = var.rds_create ? module.rds[0].port : null
+  db_name                = var.rds_create ? module.rds[0].db_name : null
+  db_user                = var.rds_create ? module.rds[0].username : null
+  db_password_secret_arn = var.rds_create ? module.rds[0].password_secret_arn : null
 
   jwt_secret    = var.backend_jwt_secret
   cookie_secret = var.backend_cookie_secret

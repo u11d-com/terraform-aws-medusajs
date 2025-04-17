@@ -3,6 +3,10 @@ locals {
 
   container_default_env = merge(
     {
+      DB_HOST : var.db_host
+      DB_PORT : var.db_port
+      DB_NAME : var.db_name
+      DB_USER : var.db_user
       DATABASE_URL : var.database_url
     },
     {
@@ -22,6 +26,10 @@ locals {
 
   container_default_secrets = merge(
     {
+      DB_PASSWORD : {
+        arn = var.db_password_secret_arn
+        key = "password"
+      },
       JWT_SECRET : {
         arn = aws_secretsmanager_secret.jwt_secret.arn
         key = "::${aws_secretsmanager_secret_version.jwt_secret.version_id}"
@@ -29,7 +37,7 @@ locals {
       COOKIE_SECRET : {
         arn = aws_secretsmanager_secret.cookie_secret.arn
         key = "::${aws_secretsmanager_secret_version.cookie_secret.version_id}"
-      }
+      },
       S3_SECRET_ACCESS_KEY : {
         arn = aws_secretsmanager_secret.s3_user_secret.arn
         key = "::${aws_secretsmanager_secret_version.s3_user_secret.version_id}"

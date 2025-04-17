@@ -5,7 +5,7 @@
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
 | <a name="requirement_archive"></a> [archive](#requirement\_archive) | ~> 2.7.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.93.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.94.1 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6.3 |
 
@@ -14,7 +14,7 @@
 | Name | Version |
 |------|---------|
 | <a name="provider_archive"></a> [archive](#provider\_archive) | ~> 2.7.0 |
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.93.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.94.1 |
 | <a name="provider_null"></a> [null](#provider\_null) | ~> 3.2.3 |
 | <a name="provider_random"></a> [random](#provider\_random) | ~> 3.6.3 |
 
@@ -105,6 +105,11 @@ No modules.
 | <a name="input_cookie_secret"></a> [cookie\_secret](#input\_cookie\_secret) | Secret used for cookie signing. If not provided, a random secret will be generated. | `string` | n/a | yes |
 | <a name="input_custom_domains"></a> [custom\_domains](#input\_custom\_domains) | List of custom domains to use for the CloudFront distribution | `list(string)` | `null` | no |
 | <a name="input_database_url"></a> [database\_url](#input\_database\_url) | URL for database connection | `string` | n/a | yes |
+| <a name="input_db_host"></a> [db\_host](#input\_db\_host) | Database host | `string` | `null` | no |
+| <a name="input_db_name"></a> [db\_name](#input\_db\_name) | Database name | `string` | `null` | no |
+| <a name="input_db_password_secret_arn"></a> [db\_password\_secret\_arn](#input\_db\_password\_secret\_arn) | Database password secret ARN | `string` | `null` | no |
+| <a name="input_db_port"></a> [db\_port](#input\_db\_port) | Database port | `string` | `null` | no |
+| <a name="input_db_user"></a> [db\_user](#input\_db\_user) | Database user | `string` | `null` | no |
 | <a name="input_deployment_circuit_breaker"></a> [deployment\_circuit\_breaker](#input\_deployment\_circuit\_breaker) | Deployment circuit breaker configuration | <pre>object({<br/>    enable   = bool<br/>    rollback = bool<br/>  })</pre> | `null` | no |
 | <a name="input_ecr_arn"></a> [ecr\_arn](#input\_ecr\_arn) | ARN of Elastic Container Registry. | `string` | n/a | yes |
 | <a name="input_ecs_container_insights"></a> [ecs\_container\_insights](#input\_ecs\_container\_insights) | Enable container insights for the ECS cluster | `string` | `"disabled"` | no |
@@ -134,5 +139,7 @@ No modules.
 |------|-------------|
 | <a name="output_admin_secret_arn"></a> [admin\_secret\_arn](#output\_admin\_secret\_arn) | n/a |
 | <a name="output_ecs_cluster_arn"></a> [ecs\_cluster\_arn](#output\_ecs\_cluster\_arn) | n/a |
+| <a name="output_ecs_cluster_name"></a> [ecs\_cluster\_name](#output\_ecs\_cluster\_name) | Name of the ECS cluster |
+| <a name="output_ecs_service_name"></a> [ecs\_service\_name](#output\_ecs\_service\_name) | Name of the ECS service |
 | <a name="output_url"></a> [url](#output\_url) | n/a |
 <!-- END_TF_DOCS -->

@@ -4,14 +4,14 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.93.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.94.1 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.93.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.94.1 |
 
 ## Modules
 
@@ -68,5 +68,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_ecs_cluster_name"></a> [ecs\_cluster\_name](#output\_ecs\_cluster\_name) | Name of the ECS cluster |
+| <a name="output_ecs_service_name"></a> [ecs\_service\_name](#output\_ecs\_service\_name) | Name of the ECS service |
 | <a name="output_url"></a> [url](#output\_url) | n/a |
 <!-- END_TF_DOCS -->

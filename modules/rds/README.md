@@ -4,14 +4,14 @@
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.93.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.94.1 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.93.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.94.1 |
 
 ## Modules
 
@@ -53,5 +53,11 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_client_security_group_id"></a> [client\_security\_group\_id](#output\_client\_security\_group\_id) | n/a |
+| <a name="output_db_name"></a> [db\_name](#output\_db\_name) | n/a |
+| <a name="output_host"></a> [host](#output\_host) | n/a |
+| <a name="output_identifier"></a> [identifier](#output\_identifier) | n/a |
+| <a name="output_password_secret_arn"></a> [password\_secret\_arn](#output\_password\_secret\_arn) | n/a |
+| <a name="output_port"></a> [port](#output\_port) | n/a |
 | <a name="output_url"></a> [url](#output\_url) | n/a |
+| <a name="output_username"></a> [username](#output\_username) | n/a |
 <!-- END_TF_DOCS -->
