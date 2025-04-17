@@ -107,7 +107,7 @@ module "backend" {
 
   redis_url = var.elasticache_create ? module.elasticache[0].url : var.redis_url
 
-  database_url           = var.rds_create ? module.rds[0].url : var.database_url
+  database_url                 = var.rds_create ? module.rds[0].url : var.database_url
   database_host                = var.rds_create ? module.rds[0].host : null
   database_port                = var.rds_create ? module.rds[0].port : null
   database_name                = var.rds_create ? module.rds[0].db_name : null
