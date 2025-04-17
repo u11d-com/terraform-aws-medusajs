@@ -136,7 +136,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.9 |
 | <a name="requirement_archive"></a> [archive](#requirement\_archive) | ~> 2.7.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.93.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.94.1 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.3 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.6.3 |
 
@@ -144,7 +144,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.84.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.94.1 |
 
 ## Modules
 
@@ -207,6 +207,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 | <a name="input_elasticache_nodes_num"></a> [elasticache\_nodes\_num](#input\_elasticache\_nodes\_num) | The initial number of cache nodes that the cache cluster will have. | `number` | `1` | no |
 | <a name="input_elasticache_port"></a> [elasticache\_port](#input\_elasticache\_port) | Port exposed by the redis to redirect traffic to. | `number` | `6379` | no |
 | <a name="input_elasticache_redis_engine_version"></a> [elasticache\_redis\_engine\_version](#input\_elasticache\_redis\_engine\_version) | The version of the redis that will be used to create the Elasticache cluster. You can provide a prefix of the version such as 7.1 (for 7.1.4). | `string` | `"7.1"` | no |
+| <a name="input_elasticache_redis_parameter_group_family"></a> [elasticache\_redis\_parameter\_group\_family](#input\_elasticache\_redis\_parameter\_group\_family) | The family of the ElastiCache Redis parameter group (e.g., 'redis7', 'redis6.x'). | `string` | `"redis7"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The name of the environment for which infrastructure is being provisioned. | `string` | n/a | yes |
 | <a name="input_owner"></a> [owner](#input\_owner) | The owner of the infrastructure resources. | `string` | n/a | yes |
 | <a name="input_private_subnet_ids"></a> [private\_subnet\_ids](#input\_private\_subnet\_ids) | List of private subnet IDs. Required if vpc\_create is false. | `list(string)` | `null` | no |
@@ -238,9 +239,14 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 
 | Name | Description |
 |------|-------------|
+| <a name="output_backend_ecs_cluster_name"></a> [backend\_ecs\_cluster\_name](#output\_backend\_ecs\_cluster\_name) | The name of the ECS cluster for the backend service, if created. |
+| <a name="output_backend_ecs_service_name"></a> [backend\_ecs\_service\_name](#output\_backend\_ecs\_service\_name) | The name of the ECS service for the backend, if created. |
 | <a name="output_backend_url"></a> [backend\_url](#output\_backend\_url) | The URL of the backend service, either from the created module or provided externally. |
 | <a name="output_ecr_backend_url"></a> [ecr\_backend\_url](#output\_ecr\_backend\_url) | The URL of the ECR repository for the backend service, if created. |
 | <a name="output_ecr_storefront_url"></a> [ecr\_storefront\_url](#output\_ecr\_storefront\_url) | The URL of the ECR repository for the storefront service, if created. |
+| <a name="output_rds_identifier"></a> [rds\_identifier](#output\_rds\_identifier) | The identifier of the RDS instance, if created. |
+| <a name="output_storefront_ecs_cluster_name"></a> [storefront\_ecs\_cluster\_name](#output\_storefront\_ecs\_cluster\_name) | The name of the ECS cluster for the storefront service, if created. |
+| <a name="output_storefront_ecs_service_name"></a> [storefront\_ecs\_service\_name](#output\_storefront\_ecs\_service\_name) | The name of the ECS service for the storefront, if created. |
 | <a name="output_storefront_url"></a> [storefront\_url](#output\_storefront\_url) | The URL of the storefront service, if created. |
 <!-- END_TF_DOCS -->
 <!-- markdownlint-enable MD033 MD024 -->

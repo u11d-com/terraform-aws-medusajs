@@ -66,10 +66,11 @@ module "elasticache" {
   context = local.context
   vpc     = local.vpc
 
-  node_type            = var.elasticache_node_type
-  nodes_num            = var.elasticache_nodes_num
-  redis_engine_version = var.elasticache_redis_engine_version
-  port                 = var.elasticache_port
+  node_type                    = var.elasticache_node_type
+  nodes_num                    = var.elasticache_nodes_num
+  redis_engine_version         = var.elasticache_redis_engine_version
+  redis_parameter_group_family = var.elasticache_redis_parameter_group_family
+  port                         = var.elasticache_port
 }
 
 module "rds" {
@@ -104,8 +105,14 @@ module "backend" {
   resources                      = var.backend_resources
   logs                           = var.backend_logs
 
-  redis_url    = var.elasticache_create ? module.elasticache[0].url : var.redis_url
-  database_url = var.rds_create ? module.rds[0].url : var.database_url
+  redis_url = var.elasticache_create ? module.elasticache[0].url : var.redis_url
+
+  database_url                 = var.rds_create ? module.rds[0].url : var.database_url
+  database_host                = var.rds_create ? module.rds[0].host : null
+  database_port                = var.rds_create ? module.rds[0].port : null
+  database_name                = var.rds_create ? module.rds[0].db_name : null
+  database_user                = var.rds_create ? module.rds[0].username : null
+  database_password_secret_arn = var.rds_create ? module.rds[0].password_secret_arn : null
 
   jwt_secret    = var.backend_jwt_secret
   cookie_secret = var.backend_cookie_secret

@@ -90,11 +90,6 @@ variable "redis_url" {
   type        = string
 }
 
-variable "database_url" {
-  description = "URL for database connection"
-  type        = string
-}
-
 variable "jwt_secret" {
   description = "Secret used for JWT token signing. If not provided, a random secret will be generated."
   type        = string
@@ -216,4 +211,39 @@ variable "ecs_container_insights" {
     condition     = contains(["enabled", "enhanced", "disabled"], var.ecs_container_insights)
     error_message = "The ecs_container_insights value must be either 'enabled', 'enhanced' or 'disabled'."
   }
+}
+
+variable "database_url" {
+  description = "URL for database connection"
+  type        = string
+}
+
+variable "database_host" {
+  type        = string
+  description = "Database host"
+  default     = null
+}
+
+variable "database_port" {
+  type        = string
+  description = "Database port"
+  default     = null
+}
+
+variable "database_name" {
+  type        = string
+  description = "Database name"
+  default     = null
+}
+
+variable "database_user" {
+  type        = string
+  description = "Database user"
+  default     = null
+}
+
+variable "database_password_secret_arn" {
+  type        = string
+  description = "Database password secret ARN"
+  default     = null
 }

@@ -140,6 +140,12 @@ variable "elasticache_redis_engine_version" {
   default     = "7.1"
 }
 
+variable "elasticache_redis_parameter_group_family" {
+  description = "The family of the ElastiCache Redis parameter group (e.g., 'redis7', 'redis6.x')."
+  type        = string
+  default     = "redis7"
+}
+
 variable "elasticache_port" {
   description = "Port exposed by the redis to redirect traffic to."
   type        = number
