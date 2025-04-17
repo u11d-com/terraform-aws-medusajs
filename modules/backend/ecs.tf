@@ -28,7 +28,7 @@ locals {
     {
       DB_PASSWORD : {
         arn = var.db_password_secret_arn
-        key = "password"
+        key = "password::"
       },
       JWT_SECRET : {
         arn = aws_secretsmanager_secret.jwt_secret.arn

@@ -66,10 +66,11 @@ module "elasticache" {
   context = local.context
   vpc     = local.vpc
 
-  node_type            = var.elasticache_node_type
-  nodes_num            = var.elasticache_nodes_num
-  redis_engine_version = var.elasticache_redis_engine_version
-  port                 = var.elasticache_port
+  node_type                    = var.elasticache_node_type
+  nodes_num                    = var.elasticache_nodes_num
+  redis_engine_version         = var.elasticache_redis_engine_version
+  redis_parameter_group_family = var.elasticache_redis_parameter_group_family
+  port                         = var.elasticache_port
 }
 
 module "rds" {
