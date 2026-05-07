@@ -43,7 +43,7 @@ module "complete" {
   rds_username          = "medusa"
   rds_instance_class    = "db.t3.micro"
   rds_allocated_storage = 5
-  rds_engine_version    = "15.7"
+  rds_engine_version    = "18.3"
   rds_port              = 5432
 
   # Backend
