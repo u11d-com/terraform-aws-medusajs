@@ -191,7 +191,7 @@ variable "rds_allocated_storage" {
 variable "rds_engine_version" {
   description = "The postgres engine version to use. You can provide a prefix of the version such as 8.0 (for 8.0.36)."
   type        = string
-  default     = "15.7"
+  default     = "18.3"
 }
 
 variable "rds_port" {

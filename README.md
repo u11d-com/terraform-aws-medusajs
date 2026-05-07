@@ -214,7 +214,7 @@ This example is licensed under the [Apache-2.0 license](https://www.apache.org/l
 | <a name="input_public_subnet_ids"></a> [public\_subnet\_ids](#input\_public\_subnet\_ids) | List of public subnet IDs. Required if vpc\_create is false. | `list(string)` | `null` | no |
 | <a name="input_rds_allocated_storage"></a> [rds\_allocated\_storage](#input\_rds\_allocated\_storage) | The allocated storage in gigabytes. | `number` | `5` | no |
 | <a name="input_rds_create"></a> [rds\_create](#input\_rds\_create) | n/a | `bool` | `true` | no |
-| <a name="input_rds_engine_version"></a> [rds\_engine\_version](#input\_rds\_engine\_version) | The postgres engine version to use. You can provide a prefix of the version such as 8.0 (for 8.0.36). | `string` | `"15.7"` | no |
+| <a name="input_rds_engine_version"></a> [rds\_engine\_version](#input\_rds\_engine\_version) | The postgres engine version to use. You can provide a prefix of the version such as 8.0 (for 8.0.36). | `string` | `"18.3"` | no |
 | <a name="input_rds_instance_class"></a> [rds\_instance\_class](#input\_rds\_instance\_class) | The instance type of the RDS instance. | `string` | `"db.t3.micro"` | no |
 | <a name="input_rds_port"></a> [rds\_port](#input\_rds\_port) | Port exposed by the RDS. | `number` | `5432` | no |
 | <a name="input_rds_username"></a> [rds\_username](#input\_rds\_username) | The username used to authenticate with the PostgreSQL database. | `string` | `"medusa"` | no |
